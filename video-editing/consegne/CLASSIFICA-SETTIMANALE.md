@@ -7,9 +7,9 @@ Schema di Ross (9/11): **Lunedì Scientifico** (cosa dice la ricerca, autorevole
 Regola: a ogni consegna di nuovi reel, aggiornare questa tabella (giorno, descrizione del tema, CTA finale) e riportarla in chat.
 Tutte le CTA «Commenta …» rimandano in DM alle info sui percorsi di coaching personalizzato, tranne WORKSHOP (date del prossimo workshop dal vivo) e, dal 21/11, STRATI e CIRCUITO (guide da scaricare della serie G).
 
-## YTCN 26 · «Correre al freddo» (serie G, 12 reel, 21/11)
+## YTCN 26 · «Correre al freddo» (serie G, 13 reel, 21-22/11)
 
-Due CTA con guida da scaricare al posto delle info sul coaching (richiesta di Ross del 21/11): STRATI → guida «Come vestirsi per correre al freddo» (G2); CIRCUITO → guida «Riscaldamento in casa in 5 minuti» (G4 e i quattro esercizi G5-G8). Le guide sono da preparare. Nella serie non c'è un Lunedì Scientifico (nel video non si citano studi) né un Venerdì Conversione (i due pezzi sulla sfida dei 5 giorni rimandano al link in descrizione di YouTube e sono rimasti fuori).
+Due CTA con guida da scaricare al posto delle info sul coaching (richiesta di Ross del 21/11): STRATI → guida «Come vestirsi per correre al freddo» (G2, ancora da preparare); CIRCUITO → guida «Come scaldarsi quando fa freddo» (G13, e proposta per G4 e per i quattro esercizi G5-G8), pronta dal 22/11 in `consegne/ytcn26/Come-scaldarsi-quando-fa-freddo.pdf`. Nella serie non c'è un Lunedì Scientifico (nel video non si citano studi) né un Venerdì Conversione (i due pezzi sulla sfida dei 5 giorni rimandano al link in descrizione di YouTube e sono rimasti fuori).
 
 **G1 l'errore dei troppi strati · Mercoledì Problem/Solution · CTA BRIVIDO**
 Il problema: quando si corre al freddo la prima cosa a cui pensiamo è coprirci bene, e troppo spesso ci vestiamo in modo eccessivo pensando che più strati significhino più calore e più comfort; è uno degli errori più comuni e può trasformare la corsa in un incubo di sudore e disagio. La risposta: capire come funziona il corpo al freddo. All'inizio sembra di congelare e la tentazione di un maglione o di una giacca pesante è forte, ma dopo i primi 5-10 minuti il corpo inizia a riscaldarsi naturalmente. Chiusura: meglio partire con una leggera sensazione di freddo; quel piccolo brivido iniziale è il segnale che ci siamo vestiti nel modo giusto.
@@ -46,6 +46,9 @@ Respirare solo dal naso quando si corre può risultare difficile, soprattutto se
 
 **G12 lo squat naturale · Giovedì Pratico · CTA SQUAT**
 Il movimento post corsa più potente per l'essere umano, secondo Daniele, è lo squat naturale. Defaticamento e stretching vanno fatti in un ambiente chiuso o almeno riparato, soprattutto quando le temperature sono molto basse. Questo piccolo rituale migliora il recupero e fa la manutenzione necessaria a prevenire gli indolenzimenti. Bastano 3-4 minuti di squat naturale: un investimento che ripaga nella qualità delle corse e nella salute del corpo.
+
+**G13 i 4 esercizi insieme · Giovedì Pratico · CTA CIRCUITO (guida «Come scaldarsi quando fa freddo»)**
+Reel veloce di 8 secondi, muto, senza sottotitoli: lo schermo è diviso in quattro fasce orizzontali e i quattro esercizi del circuito di riscaldamento in casa scorrono insieme (mountain climber, ponte per i glutei, affondi, jumping jack), ognuno con numero e nome. In apertura il titolo «4 esercizi per scaldarti in casa»; in fondo resta il banner «Scarica la guida gratuita · Commenta CIRCUITO». La guida (17 pagine) riporta per iscritto tutto il video: come vestirsi, il circuito esercizio per esercizio, la corsa di riscaldamento, la respirazione, lo squat naturale dopo la corsa.
 
 ## YTCN 22 · «Il costo invisibile degli infortuni» (serie F, 15 reel, 17/11)
 
@@ -255,6 +258,6 @@ Il problema: la tecnica di corsa spiegata alla testa, con troppe regole da ricor
 
 Versioni «percorso» (alternative alle precedenti, non si sommano nel conteggio): stessi sette reel senza la parte sul manuale, chiusi dal pannello «Commenta PERCORSO»; senza il manuale C3 e C7 diventano educativi (martedì); tagli rifatti e durata ridotta il 12/11 (da 0:35 a 1:02 più la CTA). Schede complete in `consegne/ccb/SCHEDE.md`.
 
-## Conteggio (76 contenuti)
-Scientifico 3 · Educativo 18 · Problem/Solution 15 · Pratico 15 · Conversione 25 (i due reel F11 e F12 di YTCN 22, due vlog dell'evento, Daniela, Massimiliano, Laura, Taddeo, Mattia e Giancarlo in reel e versione lunga, la sei ore di Franco, il bilancio di Davide, il primo trail di Giulia e la prima ultramaratona di Luca in reel e versione lunga: nomi di fantasia). Dentro il conteggio ci sono anche i sette reel «CCB new angle» (selfie spontanei, senza grafiche): C1 e C2 educativi, C4 problem/solution, C5 e C6 pratici, C3 e C7 conversione sul manuale; le 17 stories sono a parte, in `consegne/ccb/SCHEDE.md`.
+## Conteggio (77 contenuti)
+Scientifico 3 · Educativo 18 · Problem/Solution 15 · Pratico 16 · Conversione 25 (i due reel F11 e F12 di YTCN 22, due vlog dell'evento, Daniela, Massimiliano, Laura, Taddeo, Mattia e Giancarlo in reel e versione lunga, la sei ore di Franco, il bilancio di Davide, il primo trail di Giulia e la prima ultramaratona di Luca in reel e versione lunga: nomi di fantasia). Dentro il conteggio ci sono anche i sette reel «CCB new angle» (selfie spontanei, senza grafiche): C1 e C2 educativi, C4 problem/solution, C5 e C6 pratici, C3 e C7 conversione sul manuale; le 17 stories sono a parte, in `consegne/ccb/SCHEDE.md`.
 Venerdì nelle serie YTCN: F11 «basta infortuni» e F12 «il metodo in tre passi» (YTCN 22) portano all'offerta con le parole di Daniele; manca ancora un reel YTCN con una testimonianza reale dentro. In YTCN 22 non c'è un Lunedì Scientifico (nel video non si citano studi).

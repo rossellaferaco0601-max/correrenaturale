@@ -2,9 +2,9 @@
 
 Formato fisso delle schede (vedi `memoria/feedback-formato-schede.md`). File in `video-engine/out/ytcn26/consegna/` (`G2-strati_v2`, `G4-casa_v2`, `G6-ponte_v2`, `G7-affondi_v2`, `G8-jack_v2`, gli altri `_v1`, con copertina, didascalia e anteprima).
 
-## YTCN 26 · «Correre al freddo» (serie G, 12 reel, 21/11)
+## YTCN 26 · «Correre al freddo» (serie G, 13 reel, 21-22/11)
 
-Due CTA con guida da scaricare al posto delle info sul coaching (richiesta di Ross del 21/11): STRATI → guida «Come vestirsi per correre al freddo» (G2); CIRCUITO → guida «Riscaldamento in casa in 5 minuti» (G4 e i quattro esercizi G5-G8). Le guide sono da preparare. Nella serie non c'è un Lunedì Scientifico (nel video non si citano studi) né un Venerdì Conversione (i due pezzi sulla sfida dei 5 giorni rimandano al link in descrizione di YouTube e sono rimasti fuori).
+Due CTA con guida da scaricare al posto delle info sul coaching (richiesta di Ross del 21/11): STRATI → guida «Come vestirsi per correre al freddo» (G2, ancora da preparare); CIRCUITO → guida «Come scaldarsi quando fa freddo» (G13, e proposta per G4 e per i quattro esercizi G5-G8), pronta dal 22/11 in `consegne/ytcn26/Come-scaldarsi-quando-fa-freddo.pdf`. Nella serie non c'è un Lunedì Scientifico (nel video non si citano studi) né un Venerdì Conversione (i due pezzi sulla sfida dei 5 giorni rimandano al link in descrizione di YouTube e sono rimasti fuori).
 
 **G1 l'errore dei troppi strati · Mercoledì Problem/Solution · CTA BRIVIDO**
 Il problema: quando si corre al freddo la prima cosa a cui pensiamo è coprirci bene, e troppo spesso ci vestiamo in modo eccessivo pensando che più strati significhino più calore e più comfort; è uno degli errori più comuni e può trasformare la corsa in un incubo di sudore e disagio. La risposta: capire come funziona il corpo al freddo. All'inizio sembra di congelare e la tentazione di un maglione o di una giacca pesante è forte, ma dopo i primi 5-10 minuti il corpo inizia a riscaldarsi naturalmente. Chiusura: meglio partire con una leggera sensazione di freddo; quel piccolo brivido iniziale è il segnale che ci siamo vestiti nel modo giusto.
@@ -41,3 +41,6 @@ Respirare solo dal naso quando si corre può risultare difficile, soprattutto se
 
 **G12 lo squat naturale · Giovedì Pratico · CTA SQUAT**
 Il movimento post corsa più potente per l'essere umano, secondo Daniele, è lo squat naturale. Defaticamento e stretching vanno fatti in un ambiente chiuso o almeno riparato, soprattutto quando le temperature sono molto basse. Questo piccolo rituale migliora il recupero e fa la manutenzione necessaria a prevenire gli indolenzimenti. Bastano 3-4 minuti di squat naturale: un investimento che ripaga nella qualità delle corse e nella salute del corpo.
+
+**G13 i 4 esercizi insieme · Giovedì Pratico · CTA CIRCUITO (guida «Come scaldarsi quando fa freddo»)**
+Reel veloce di 8 secondi, muto, senza sottotitoli: lo schermo è diviso in quattro fasce orizzontali e i quattro esercizi del circuito di riscaldamento in casa scorrono insieme (mountain climber, ponte per i glutei, affondi, jumping jack), ognuno con numero e nome. In apertura il titolo «4 esercizi per scaldarti in casa»; in fondo resta il banner «Scarica la guida gratuita · Commenta CIRCUITO». La guida (17 pagine) riporta per iscritto tutto il video: come vestirsi, il circuito esercizio per esercizio, la corsa di riscaldamento, la respirazione, lo squat naturale dopo la corsa.

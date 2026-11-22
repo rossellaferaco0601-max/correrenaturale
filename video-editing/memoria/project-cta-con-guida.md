@@ -4,7 +4,7 @@ description: "Alcuni reel chiudono con «commenta e ti mando la guida» invece d
 metadata:
   node_type: memory
   type: project
-  modified: 2026-11-21
+  modified: 2026-11-22
 ---
 
 Ross, 21/11/2026 (serie G, YTCN 26): «dimmi se a qualcuno di questi possiamo attaccare una guida, cioè devono commentare per avere una guida
@@ -21,3 +21,11 @@ pratico (interpretazione mia). Ha senso sui reel «da salvare» (pratici, a elen
 - Le guide NON esistono ancora: vanno scritte (solo con le parole e i numeri di Daniele) prima di pubblicare quei reel. Se Ross cambia
   idea su un reel, tornare alla CTA del coaching è un solo render.
 - Nelle schede la riga diventa «CTA PAROLA (guida «titolo»)».
+
+**22/11/2026:** la guida del circuito esiste: «Come scaldarsi quando fa freddo», 17 pagine verticali (1080×1350), tutto YTCN 26 per
+iscritto con i fotogrammi del video (Ross: «devi riportare tutte le info del video originale… dobbiamo dare qualcosa in più rispetto a
+ciò che c'è nel reel»). Sorgente `video-engine/work/ytcn26/guida/build.py` (+ `export.js` per PDF e controllo dell'impaginazione), PDF in
+`video-editing/consegne/ytcn26/`. È la guida del reel G13 (quattro fasce orizzontali, banner «Scarica la guida gratuita · Commenta
+CIRCUITO»). Nei reel G4-G8 la CTA nomina ancora «Riscaldamento in casa in 5 minuti»: se Ross conferma che portano a questa guida, va
+aggiornato il titolo nella CTA e nelle didascalie (un render per reel). Regola per le guide: solo parole e numeri del video, nessun
+consiglio tecnico aggiunto; immagini = fotogrammi dell'originale.
