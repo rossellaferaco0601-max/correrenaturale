@@ -578,3 +578,10 @@ Da leggere prima di ogni montaggio. Ogni correzione ricevuta va aggiunta in fond
 - **Pannello con disegno**: finché non c'è una frase il disegno sta al centro del pannello e scivola a sinistra quando entra la prima scritta (niente metà vuota per due o tre secondi).
 - **Reel a finestra**: l'intestazione fissa sparisce 1,3 s prima della fine del parlato e non ricompare per pochi fotogrammi dopo l'ultima grafica.
 
+## 2026-11-22 · G13 «4 esercizi» a schermo diviso + guida (richiesta di Ross)
+- Richiesta: prima quattro video puliti dei singoli esercizi (solo esecuzione, niente sottotitoli: `video-engine/out/ytcn26/esercizi/E1…E4`), poi «un reel con lo schermo splittato in 4, i video muti, un banner in fondo che invita a scaricare una guida su come riscaldarsi quando fa freddo, contenuto veloce»; copertina con titolo e volto di Daniele da una foto del catalogo; reel e guida fatti con le informazioni del video originale. **Prima le anteprime (fotogrammi), poi il via.**
+- Reel: composizione `G13-quattro` (`src/cn/Quad4.tsx`, 8 s, muto, senza pannello CTA: la CTA è il banner). Celle 540×640 ritagliate con ffmpeg in `public/ytcn26/quad/`: in alto i due esercizi a terra (corpo in basso nella cella, sotto la zona dell'interfaccia), in basso i due in piedi; etichette con numero e nome; banner crema con bordo lime tra 1296 e 1494 px, bordo destro a 950 px. Parola: CIRCUITO (la stessa dei reel G4-G8).
+- Jumping jack: l'inquadratura stretta è una ripresa a mano che scende sulle gambe e risale (374,75-386,64): per la cella si usa il campo largo (371,5-374,7) e poi il mezzo busto da 380,9.
+- Guida: bozza in `video-engine/work/ytcn26/guida/guida.html` (pagine 1080×1350, stile del marchio, solo parole e numeri di Daniele).
+- Foto di Daniele: il collegamento `FOTO CORRERE NATURALE (catalogo).url` sta sul PC di Ross (cartella non offerta alle sessioni cloud); su Drive c'è `Marketing Correre Naturale / Foto / Daniele Vecchioni - brandizzato CN….zip` (867 MB) ma non è scaricabile da qui (serve l'accesso, il connettore si ferma a 10 MB). Nelle anteprime c'è un fotogramma del video come segnaposto.
+

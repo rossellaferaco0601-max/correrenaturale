@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<title>Come scaldarsi quando fa freddo</title>
+<style>
+@font-face { font-family: Blinker; font-weight: 400; src: url(Blinker-Regular.ttf); }
+@font-face { font-family: Blinker; font-weight: 600; src: url(Blinker-SemiBold.ttf); }
+@font-face { font-family: Blinker; font-weight: 800; src: url(Blinker-ExtraBold.ttf); }
+@font-face { font-family: Blinker; font-weight: 900; src: url(Blinker-Black.ttf); }
+:root { --green: #49762E; --deep: #1C3D15; --lime: #95FF00; --cream: #F4F1E5; --ink: #0B0F0A; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@page { size: 1080px 1350px; margin: 0; }
+body { font-family: Blinker, sans-serif; color: var(--ink); background: #888; }
+.page { width: 1080px; height: 1350px; position: relative; overflow: hidden; background: var(--cream); page-break-after: always; }
+.up { text-transform: uppercase; }
+.kicker { display: inline-block; background: var(--lime); color: var(--ink); font-weight: 900; font-size: 30px; letter-spacing: 3px; padding: 8px 22px 10px; border-radius: 10px; text-transform: uppercase; }
+.foot { position: absolute; left: 70px; right: 70px; bottom: 40px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 24px; color: rgba(11,15,10,0.55); }
+.foot b { color: var(--green); font-weight: 900; }
+h2 { font-weight: 900; font-size: 84px; line-height: 0.98; text-transform: uppercase; }
+p { font-weight: 400; font-size: 36px; line-height: 1.28; }
+/* copertina */
+.cover { background: var(--ink); color: #fff; }
+.cover .photo { position: absolute; inset: 0; background: url(img/daniele_provvisoria.jpg) center 18% / cover; }
+.cover .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,15,10,0) 38%, rgba(20,44,15,0.86) 58%, rgba(11,15,10,0.98) 80%); }
+.cover .txt { position: absolute; left: 70px; right: 70px; bottom: 150px; }
+.cover h1 { font-weight: 900; font-size: 120px; line-height: 0.96; text-transform: uppercase; margin: 26px 0 22px; }
+.cover h1 span { color: var(--lime); }
+.cover .sub { font-weight: 600; font-size: 42px; line-height: 1.2; color: var(--cream); }
+.cover .logo { position: absolute; left: 70px; bottom: 46px; height: 76px; }
+.cover .by { position: absolute; right: 70px; bottom: 62px; font-weight: 600; font-size: 28px; color: rgba(244,241,229,0.8); }
+/* circuito */
+.pad { padding: 60px 70px 0; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 30px; }
+.card { background: #fff; border-radius: 28px; overflow: hidden; box-shadow: 0 6px 18px rgba(11,15,10,0.10); }
+.card .im { height: 198px; background-size: cover; background-position: center; position: relative; }
+.card .n { position: absolute; left: 16px; top: 16px; width: 68px; height: 68px; border-radius: 34px; background: var(--lime); font-weight: 900; font-size: 46px; display: flex; align-items: center; justify-content: center; }
+.card .b { padding: 14px 22px 18px; }
+.card h3 { font-weight: 900; font-size: 40px; line-height: 1; text-transform: uppercase; }
+.card .w { font-weight: 400; font-size: 27px; line-height: 1.22; margin-top: 6px; color: rgba(11,15,10,0.78); min-height: 66px; }
+.pill { display: inline-block; margin-top: 8px; background: var(--deep); color: var(--lime); font-weight: 800; font-size: 26px; padding: 6px 16px 8px; border-radius: 10px; }
+.note { margin-top: 24px; background: var(--deep); color: var(--cream); border-radius: 24px; padding: 24px 30px; font-size: 31px; line-height: 1.25; }
+.note b { color: var(--lime); font-weight: 800; }
+/* scheda esercizio */
+.hero { height: 560px; background-size: cover; background-position: center; position: relative; }
+.hero .n { position: absolute; left: 70px; bottom: -52px; width: 120px; height: 120px; border-radius: 60px; background: var(--lime); font-weight: 900; font-size: 84px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 10px var(--cream); }
+.ex { padding: 84px 70px 0; }
+.ex h2 { font-size: 92px; }
+.rows { margin-top: 30px; display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; align-items: start; }
+.row .l { font-weight: 900; font-size: 30px; text-transform: uppercase; color: var(--green); padding-top: 4px; letter-spacing: 1px; }
+.row .r { font-size: 34px; line-height: 1.26; }
+.quote { margin-top: 26px; border-left: 10px solid var(--lime); padding: 6px 0 6px 24px; font-weight: 600; font-style: italic; font-size: 32px; line-height: 1.25; color: rgba(11,15,10,0.8); }
+</style></head><body>
+
+<!-- 1 · copertina -->
+<section class="page cover">
+  <div class="photo"></div><div class="shade"></div>
+  <div class="txt">
+    <span class="kicker">Guida gratuita</span>
+    <h1>Come scaldarsi<br><span>quando fa freddo</span></h1>
+    <div class="sub">Il riscaldamento da fare in casa, in 5 minuti,<br>prima di uscire a correre.</div>
+  </div>
+  <img class="logo" src="img/logo-cn-orizzontale-bianco.png">
+  <div class="by">di Daniele Vecchioni</div>
+</section>
+
+<!-- 3 · il circuito -->
+<section class="page"><div class="pad">
+  <span class="kicker">Il circuito</span>
+  <h2 style="margin-top:18px;font-size:74px">4 esercizi,<br>già vestito, in casa</h2>
+  <div class="grid">
+    <div class="card"><div class="im" style="background-image:url(img/e1.jpg)"><div class="n">1</div></div><div class="b"><h3>Mountain climber</h3><div class="w">Postura, addominali, parte superiore, flessori dell'anca, piedi.</div><span class="pill">20 s · 30 s · 1 min</span></div></div>
+    <div class="card"><div class="im" style="background-image:url(img/e2.jpg)"><div class="n">2</div></div><div class="b"><h3>Ponte per i glutei</h3><div class="w">Estensione delle anche e del bacino. Dinamico o statico.</div><span class="pill">30 s · 1 min</span></div></div>
+    <div class="card"><div class="im" style="background-image:url(img/e3.jpg)"><div class="n">3</div></div><div class="b"><h3>Affondi</h3><div class="w">Coordinati e gentili: tutto il corpo, soprattutto la parte inferiore.</div><span class="pill">Non oltre 1 min</span></div></div>
+    <div class="card"><div class="im" style="background-image:url(img/e4.jpg)"><div class="n">4</div></div><div class="b"><h3>Jumping jack</h3><div class="w">Alzano la temperatura corporea e scaldano i tendini.</div><span class="pill">30 s · 1 min</span></div></div>
+  </div>
+  <div class="note">Lo scopo <b>non è affaticarsi</b>: è solo scaldarsi. Alla fine sei già quasi sudato e pronto a uscire.</div>
+</div><div class="foot"><span><b>Correre Naturale®</b> · Come scaldarsi quando fa freddo</span><span>3</span></div></section>
+
+<!-- 4 · scheda esercizio -->
+<section class="page">
+  <div class="hero" style="background-image:url(img/e1.jpg)"><div class="n">1</div></div>
+  <div class="ex">
+    <h2>Mountain climber</h2>
+    <div class="rows">
+      <div class="row"><div class="l">Perché</div><div class="r">Scalda molto bene: basta questo per alzare il calore interno.</div></div>
+      <div class="row"><div class="l">Cosa lavora</div><div class="r">Postura, addominali e parte superiore del corpo. In più i flessori dell'anca, e si attivano anche i piedi.</div></div>
+      <div class="row"><div class="l">Quanto</div><div class="r">20 secondi, 30 secondi o un minuto.</div></div>
+    </div>
+    <div class="quote">«Si lavora tutto e ci scalda per bene.»</div>
+  </div>
+  <div class="foot"><span><b>Correre Naturale®</b> · Come scaldarsi quando fa freddo</span><span>4</span></div>
+</section>
+</body></html>
