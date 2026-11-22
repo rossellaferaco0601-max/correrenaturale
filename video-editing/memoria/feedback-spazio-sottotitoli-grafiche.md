@@ -4,7 +4,7 @@ description: "In tutti i reel più spazio tra sottotitoli e animazioni (~100 px)
 metadata:
   node_type: memory
   type: feedback
-  modified: 2026-11-21
+  modified: 2026-11-22
 ---
 
 Ross, 18/11/2026: «memorizza questo: in tutti i reel deve esserci più spazio tra i sottotitoli e le animazioni, te lo avevo già detto,
@@ -25,3 +25,7 @@ degli spazi». Le rappresentazioni disegnate (pannello con illustrazione + frase
 destro a 971 px), pannelli alti 336-350 px alzati con `dy` fin dove il mento lo permette (aria sempre ~100 px), il disegno ingrandito
 dentro il pannello (`ART_FIT` in `Elements10.tsx`). Le miniature dei fogli di controllo ingannano: giudicare la grandezza su un fotogramma
 intero (`npx remotion still ID out.png --frame=N`).
+
+**22/11/2026 (G13, reel a fasce):** due bocciature di fila perché lasciavo una zona verde piena sotto il banner («i video devono prendere
+tutto lo schermo anche in verticale»). Le zone sicure di Instagram valgono per scritte e banner, NON per il video: il video riempie sempre
+tutto il fotogramma, la grafica gli sta sopra dove c'è spazio libero nell'inquadratura. Mai fondi pieni per «fare posto» alla grafica.
