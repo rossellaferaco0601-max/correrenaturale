@@ -56,6 +56,7 @@ npx tsx scripts/f_map.ts F2-ciclista          # mappa di lavoro: inquadrature, m
 scripts/f_queue.sh F2-ciclista:v1 F3-fastidi:v1   # coda render della serie F; finitura con OUT=out/ytcn22 WK=work/ytcn22 WMODEL=large-v3-turbo scripts/cn_finish.sh ID v1
 scripts/f_queue.sh G2-strati:v1                  # serie G (YTCN 26, «Correre al freddo»): stessi script della serie F (scripts/f_series.ts), cartelle ytcn26; finitura con OUT=out/ytcn26 WK=work/ytcn26
 npx tsx work/ytcn26/gem_preview.tsx GemLayers out/chk/gem '{"stage":2,"cue":0.4,"fx":[1.4,2.6]}' 0.3,1,2   # pagine di controllo di un'illustrazione scritta da Gemini (src/cn/gem)
+python3 scripts/g13_bands.py && npx remotion render G13-quattro out/ytcn26/G13_raw.mp4   # reel «a fasce» (quattro esercizi + fascia banner, 30 s, muto); guida in PDF: python3 work/ytcn26/guida/build.py && node work/ytcn26/guida/export.js out/ytcn26/guida
 ```
 
 ## Clienti

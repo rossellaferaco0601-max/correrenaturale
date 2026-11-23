@@ -14,7 +14,7 @@ import { BRAND } from "./types";
 const FONT = "Blinker, sans-serif";
 const INK = "#0B0F0A";
 const BH = 368, BAN_TOP = 4 * BH;
-export const QUAD_FRAMES = 390;
+export const QUAD_FRAMES = 900;
 const BANDS: { src: string; n: string; name: string[]; side: "left" | "right"; top: number }[] = [
   { src: "ytcn26/quad/b1.mp4", n: "1", name: ["Mountain", "climber"], side: "right", top: 236 },   // sotto i 220 px dell'interfaccia in alto
   { src: "ytcn26/quad/b2.mp4", n: "2", name: ["Ponte per", "i glutei"], side: "right", top: 18 },
