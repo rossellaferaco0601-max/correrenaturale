@@ -13,8 +13,8 @@
   "h": 800,
   "bg": "0x49762E"
  },
- "tail": 0.8,
- "tailLive": 0,
+ "tail": 0.3,
+ "tailLive": 0.3,
  "segments": [
   {
    "from": 370.36,

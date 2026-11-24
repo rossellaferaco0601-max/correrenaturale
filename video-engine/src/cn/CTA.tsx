@@ -7,13 +7,14 @@ const FONT = "Blinker, sans-serif";
 /** CTA coaching: chiara e ordinata (Ross 11/11: «troppo incasinata, troppe cose da leggere in troppo poco tempo»).
  *  Tre passi, uno alla volta, dall'alto in basso: 1) la domanda + «coaching personalizzato di Correre Naturale®» evidenziato;
  *  2) «Commenta» + la parola, scritta e pubblicata (con il suono del tocco); 3) la notifica con il logo. Niente coriandoli, niente «Segui», niente ombre né attenuazioni: tutto pieno e nitido. */
-export const CTA: React.FC<{ cta: CTAT; frames: number }> = ({ cta, frames }) => {
+export const CTA: React.FC<{ cta: CTAT; frames: number; soft?: boolean }> = ({ cta, frames, soft }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const s = (delay: number, cfg = { damping: 16, stiffness: 130 }) => spring({ frame: frame - delay, fps, config: cfg });
   // ingresso: il pannello sale dal basso in 9 fotogrammi (niente dissolvenza: nessun velo verde sul video)
-  const WIPE = 9;
-  const up = 1 - Math.pow(1 - Math.min(1, frame / WIPE), 3);
+  // `soft` (serie G, 24/11): 12 fotogrammi con partenza e arrivo morbidi, cominciando prima della fine del parlato
+  const WIPE = soft ? 12 : 9, x = Math.min(1, frame / WIPE);
+  const up = soft ? (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2) : 1 - Math.pow(1 - x, 3);
 
   // tempi (fotogrammi): ogni blocco ha il tempo di essere letto prima del successivo
   const T_TITLE = 8, T_HL = 34, T_WORD = 72, T_BOX = 96, T_TYPE = 108, T_TAP = 138, T_PUB = 146, T_DM = 166;

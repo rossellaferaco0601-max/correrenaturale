@@ -15,7 +15,9 @@
 - [Solo i punti richiesti](feedback-solo-punti-richiesti.md) — 6/11: toccare solo ciò che Ross elenca; niente logo nei reel; tagli netti tra inquadrature; box ridotte, titoli sopra la testa
 - [Reference = schema esatto](feedback-reference-schema-esatto.md) — 6/11: misurare la reference e replicarla; logo scontornato; 7/11: brano dato da Ross = solo quello, stacchi sui colpi misurati
 - [GitHub e pulizia versioni](feedback-github-push.md) — 13/11: GitHub di nuovo attivo, push dopo i commit (niente PR); in consegna solo l'ultima versione di ogni video
-- [Finale prima della CTA](feedback-finale-prima-della-cta.md) — 17-21/11: mai la mossa/inquadratura successiva di Daniele (nemmeno un fotogramma: `f_flash.py`), mai fermo immagine, mai stacco netto; ultima grafica fuori prima della CTA
+- [Finale prima della CTA](feedback-finale-prima-della-cta.md) — 17-24/11: dopo l'ultima parola non resta nessun video (la CTA sale 0,4 s prima e copre sull'ultima sillaba); mai mossa successiva, fermo immagine, andata e ritorno («parlato muto») o stacco netto
 - [Spazio sottotitoli-grafiche](feedback-spazio-sottotitoli-grafiche.md) — 18-21/11: ~100 px di aria in tutti i reel, scritte dentro le caselle, zone sicure Instagram (f_place.ts); animazioni grandi quanto lo spazio permette
 - [Niente tagli inutili](feedback-niente-tagli-inutili.md) — 18/11: se il pezzo è integro nell'originale non si taglia in mezzo (interpretazione da confermare)
-- [CTA con guida](project-cta-con-guida.md) — 21/11: reel che chiudono con «commenta e ti mando la guida» (STRATI, CIRCUITO nella serie G); guide ancora da scrivere
+- [CTA con guida](project-cta-con-guida.md) — 21-24/11: reel che chiudono con «commenta e ti mando la guida»; nella serie G parola unica FREDDO e una sola guida, «Come scaldarsi quando fa freddo»
+- [Figure realistiche / 3D](feedback-figure-realistiche-3d.md) — 24/11: mai omini disegnati in SVG; persone in 3D (Blender, scripts/b3d) o generate; effetti veri oltre ai pannelli; pilota prima della serie
+- [Sorgente: musica e inquadratura](feedback-sorgente-musica-e-inquadratura.md) — 24/11: togliere la musica dal sorgente prima di montare; foglio delle inquadrature dopo ogni master (volto al centro); una sola parola CTA per serie

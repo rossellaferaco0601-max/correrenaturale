@@ -19,6 +19,8 @@ import { GemBridge } from "./gem/GemBridge";
 import { GemLunge } from "./gem/GemLunge";
 import { GemJack } from "./gem/GemJack";
 import { GaugeArt } from "./gem/GaugeArt";
+import GLYPHS from "./blinker900.json";
+import { B3DOver, B3DWarm, B3DWarmOk, B3DMani, B3DCasa, B3DPasso, B3DEnergia, B3DNasoFreddo, B3DNaso, B3DNasoFiltro, B3DRespiro, B3DSquat, B3DSquatGiu } from "./gem/B3D";
 
 /* Serie G (YTCN 26, «Correre al freddo»): RAPPRESENTAZIONI dei concetti. I disegni animati (cartella `gem/`) sono scritti da Gemini su
    indicazioni di regia e rifiniti a mano; qui stanno le scritte (≥ 60 px) e l'aggancio alle parole di Daniele (`cues`).
@@ -37,8 +39,9 @@ type P<K extends Element["kind"]> = { el: Extract<Element, { kind: K }>; start: 
 const cueF = (el: Element, i: number, fps: number, def: number) => Math.round((el.onAt?.[i] ?? def) * fps);
 const panel = (s: number, out: number, h: number): React.CSSProperties => ({ position: "absolute", left: PANEL_X, width: PANEL_W, top: GFX_TOP, height: h, borderRadius: 30, background: "rgba(11,15,10,0.9)", fontFamily: FONT, color: BRAND.white, opacity: out * Math.min(1, s * 1.3), transform: `translateY(${(1 - s) * 40}px)`, overflow: "hidden" });
 /** corpo più grande che fa stare la scritta (maiuscola, Blinker 900) nella larghezza data */
-const glyph = (ch: string) => ("MW".includes(ch) ? 0.8 : "I1.,:;!'’ ".includes(ch) ? 0.3 : "?-".includes(ch) ? 0.45 : 0.565);   // larghezze di Blinker 900 maiuscolo, in parti del corpo
-const fit = (text: string, w: number, max: number) => Math.min(max, Math.floor(w / Math.max(2.2, [...text.toUpperCase()].reduce((a, ch) => a + glyph(ch), 0))));
+// larghezze VERE di Blinker Black maiuscolo, in parti del corpo (misurate sul file del font: 24/11, le stime facevano sbordare «ADDOMINALI»)
+const glyph = (ch: string) => (GLYPHS as Record<string, number>)[ch] ?? 0.62;
+const fit = (text: string, w: number, max: number) => Math.min(max, Math.floor(w / Math.max(2.2, 1.03 * [...text.toUpperCase()].reduce((a, ch) => a + glyph(ch), 0))));
 
 /* ---------- titolo d'apertura, un ingresso diverso per reel (`anim`): `fog` = ogni parola arriva sfocata e larga, come il fiato al freddo, e va
    a fuoco; `rise` = le parole salgono da sotto la riga; `snap` = arrivano grandi e si assestano con un colpo; `wind` = entrano spinte da sinistra;
@@ -88,7 +91,7 @@ export const Layers: React.FC<P<"layers">> = ({ el, start }) => {
   let idx = -1; on.forEach((f, i) => { if (local >= f) idx = i; });
   const kb = spring({ frame: local - cue, fps, config: { damping: 11, stiffness: 220, mass: 0.6 } });
   const kc = idx >= 0 ? spring({ frame: local - on[idx], fps, config: { damping: 12, stiffness: 230, mass: 0.55 } }) : 0;
-  const chip = idx >= 0 ? el.chips[idx] : "", TW = 520;
+  const chip = idx >= 0 ? el.chips[idx] : "", TW = 504;
   const size = Math.min(...el.lines.map((l) => fit(l, TW, 94)));
   return (
     <div style={panel(s, out, 350)}>
@@ -167,7 +170,7 @@ export const Rings: React.FC<P<"rings">> = ({ el, start }) => {
   const f0 = cueF(el, 0, fps, 0.2), lock = cueF(el, 1, fps, 2.2), warm = cueF(el, 2, fps, 3.8), on = [0, lock, warm];
   let idx = 0; on.forEach((f, i) => { if (i < el.phases.length && local >= f) idx = i; });
   const k = spring({ frame: local - on[idx], fps, config: { damping: 13, stiffness: 210, mass: 0.6 } });
-  const lines = el.phases[idx], TW = 520, size = Math.min(...lines.map((l) => fit(l, TW - 8, 100)));
+  const lines = el.phases[idx], TW = 504, size = Math.min(...lines.map((l) => fit(l, TW - 8, 100)));
   return (
     <div style={panel(s, out, 336)}>
       <div style={{ position: "absolute", left: 20, top: 18, width: 300, height: 300, transform: "scale(1.07)" }}>
@@ -207,11 +210,11 @@ export const Duel: React.FC<P<"duel">> = ({ el, start }) => {
 /* ---------- illustrazione + frase: a sinistra un disegno animato della cartella `gem/` (riceve i tempi delle parole-aggancio), a destra la
    frase del momento e, se c'è, la targhetta lime. Ogni `phases[i]` entra sull'aggancio i (oppure `on`: indice dell'aggancio, -1 = dall'inizio).
    `artCues`: quali agganci passare al disegno, nell'ordine dei suoi tempi (-1 = già avvenuto); se manca, gli stessi della grafica ---------- */
-const ARTS = { nose: GemNose, heat: GemHeat, house: GemHouse, over: GemOver, warm: GemWarm, battery: GemBattery, breath: GemBreath, squat: GemSquat, climber: GemClimber, bridge: GemBridge, lunge: GemLunge, jack: GemJack, gauge: GaugeArt };
+const ARTS = { nose: GemNose, heat: GemHeat, house: GemHouse, over: GemOver, warm: GemWarm, battery: GemBattery, breath: GemBreath, squat: GemSquat, climber: GemClimber, bridge: GemBridge, lunge: GemLunge, jack: GemJack, gauge: GaugeArt, over3d: B3DOver, warm3d: B3DWarm, warmok3d: B3DWarmOk, mani3d: B3DMani, casa3d: B3DCasa, passo3d: B3DPasso, energia3d: B3DEnergia, nasofreddo3d: B3DNasoFreddo, naso3d: B3DNaso, nasofiltro3d: B3DNasoFiltro, respiro3d: B3DRespiro, squat3d: B3DSquat, squatgiu3d: B3DSquatGiu };
 export type GemArt = keyof typeof ARTS;
 /** quanto ingrandire ogni disegno (e di quanto spostarlo) perché riempia la sua metà del pannello: le tele sono 300x300 ma il soggetto non
  *  le occupa tutte allo stesso modo (Ross 21/11: «le animazioni le farei leggermente più grandi») */
-const ART_FIT: Record<GemArt, [number, number, number]> = { nose: [1.14, 0, 0], heat: [1.24, 0, -12], house: [1.16, 0, -6], over: [1.5, -12, -16], warm: [1.42, 0, 0], battery: [1.36, -20, -42], breath: [1.14, 0, 0], squat: [1.12, 0, -4], climber: [1.14, 4, -34], bridge: [1.14, 4, -58], lunge: [1.24, 6, -30], jack: [1.24, 0, -22], gauge: [1.14, 0, -10] };
+const ART_FIT = { nose: [1.14, 0, 0], heat: [1.24, 0, -12], house: [1.16, 0, -6], over: [1.5, -12, -16], warm: [1.42, 0, 0], battery: [1.36, -20, -42], breath: [1.14, 0, 0], squat: [1.12, 0, -4], climber: [1.14, 4, -34], bridge: [1.14, 4, -58], lunge: [1.24, 6, -30], jack: [1.24, 0, -22], gauge: [1.14, 0, -10], ...Object.fromEntries(["over3d", "warm3d", "warmok3d", "mani3d", "casa3d", "passo3d", "energia3d", "nasofreddo3d", "naso3d", "nasofiltro3d", "respiro3d", "squat3d", "squatgiu3d"].map((k) => [k, [1.02, 0, 0]])) } as Record<GemArt, [number, number, number]>;
 export const Gem: React.FC<P<"gem">> = ({ el, start }) => {
   const { fps } = useVideoConfig();
   const { local, s, out, visible } = useInOut(start, Math.round(el.dur * fps));
@@ -221,7 +224,7 @@ export const Gem: React.FC<P<"gem">> = ({ el, start }) => {
   const ph = idx >= 0 ? el.phases[idx] : null, k = idx >= 0 ? spring({ frame: local - at(idx), fps, config: { damping: 13, stiffness: 210, mass: 0.6 } }) : 0;
   // finché non c'è una frase il disegno sta al centro del pannello (niente metà vuota); quando entra la prima frase scivola a sinistra
   const f0 = Math.min(...el.phases.map((_, i) => at(i))), k0 = f0 <= 0 ? 1 : spring({ frame: local - f0 + 4, fps, config: { damping: 15, stiffness: 150, mass: 0.7 } });
-  const Art = ARTS[el.art], H = 336, TW = 510;
+  const Art = ARTS[el.art], H = 336, TW = 492;   // 32 px di margine dal bordo destro del pannello
   const artCues = el.artCues ? el.artCues.map((i) => (i < 0 ? -1 : sec[i] ?? 9999)) : sec;
   const size = ph ? Math.min(...ph.lines.map((l) => fit(l, TW, ph.chip ? 90 : 100))) : 0;
   return (
@@ -358,6 +361,75 @@ export const Takeaway: React.FC<P<"takeaway">> = ({ el, start }) => {
       <div style={{ position: "absolute", left: 0, width: 1080, top: 830, textAlign: "center", opacity: k(8), transform: `translateY(${(1 - k(8)) * 40}px)` }}>
         <div style={{ fontWeight: 800, fontSize: 48, letterSpacing: 4, textTransform: "uppercase", color: CREAM, marginBottom: 18 }}>{el.kicker ?? "Da ricordare"}</div>
         {el.lines.map((l, i) => <div key={i} style={{ fontWeight: 900, fontSize: fit(l, 940, 132), lineHeight: 1.04, textTransform: "uppercase", whiteSpace: "nowrap", color: l === el.accent ? BRAND.lime : BRAND.white }}>{l}</div>)}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* ---------- banner fisso (Ross 24/11, G4: «un banner dall'inizio alla fine del video con la CTA per ricevere il circuito completo»):
+   una riga sola sotto i sottotitoli, dentro la zona sicura di Instagram (sopra i 1600 px, a sinistra della colonna dei comandi).
+   La parola da commentare sta nella pillola lime, che pulsa piano; entra dopo il titolo d'apertura e resta fino alla CTA ---------- */
+export const Banner: React.FC<{ word: string; text: string[]; y: number; from?: number }> = ({ word, text, y, from = 20 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const k = spring({ frame: frame - from, fps, config: { damping: 15, stiffness: 150, mass: 0.7 } });
+  const pulse = 1 + 0.04 * Math.max(0, Math.sin(((frame - from) / fps) * Math.PI * 0.9));
+  return (
+    <div style={{ position: "absolute", left: 60, width: 912, top: y, height: 78, borderRadius: 39, background: "rgba(11,15,10,0.92)", border: `3px solid ${BRAND.lime}`, boxSizing: "border-box", fontFamily: FONT, display: "flex", alignItems: "center", justifyContent: "center", gap: 14, opacity: clamp01(k * 1.5), transform: `translateY(${(1 - k) * 60}px)` }}>
+      <div style={{ fontWeight: 800, fontSize: 36, color: BRAND.white, whiteSpace: "nowrap" }}>{text[0]}</div>
+      <div style={{ background: BRAND.lime, color: INK, fontWeight: 900, fontSize: 44, lineHeight: 1, padding: "5px 16px 8px", borderRadius: 12, transform: `scale(${pulse})` }}>{word}</div>
+      <div style={{ fontWeight: 800, fontSize: 36, color: BRAND.white, whiteSpace: "nowrap" }}>{text[1]}</div>
+    </div>
+  );
+};
+
+/* ---------- effetto d'ambiente sui bordi dello schermo (24/11): `frost` = il gelo sale dagli angoli (velo azzurro e cristalli che si disegnano)
+   mentre Daniele dice «congelare»; `heat` = alone caldo che pulsa dal basso quando il corpo si scalda. Sta solo sui bordi: mai sul volto,
+   mai sopra sottotitoli e grafiche (che restano leggibili al centro) ---------- */
+export const Ambient: React.FC<P<"ambient">> = ({ el, start }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const local = frame - start, durF = Math.round(el.dur * fps);
+  if (local < 0 || local >= durF) return null;
+  const k = clamp01(local / 14) * clamp01((durF - local) / 12), t = local / fps;
+  if (el.mood === "heat") {
+    return (
+      <AbsoluteFill style={{ pointerEvents: "none", opacity: k }}>
+        <AbsoluteFill style={{ boxShadow: `inset 0 -${120 + 40 * Math.sin(t * 5)}px 260px -60px rgba(255,120,30,0.85), inset 0 0 200px 30px rgba(255,150,40,0.45)` }} />
+      </AbsoluteFill>
+    );
+  }
+  // cristalli: rami che crescono dai quattro angoli (lontani dal volto, che sta al centro in alto)
+  const branch = (x: number, y: number, ang: number, len: number, depth: number, key: string, grow: number): React.ReactNode[] => {
+    const x2 = x + Math.cos(ang) * len * grow, y2 = y + Math.sin(ang) * len * grow;
+    const out: React.ReactNode[] = [<line key={key} x1={x} y1={y} x2={x2} y2={y2} stroke="#EAF6FF" strokeWidth={2 + depth * 2.2} strokeLinecap="round" opacity={0.9} />];
+    if (depth > 0 && grow > 0.35) [0.45, 0.8].forEach((f, i) => [-1, 1].forEach((sg) => out.push(...branch(x + Math.cos(ang) * len * f * grow, y + Math.sin(ang) * len * f * grow, ang + sg * 0.9, len * 0.42, depth - 1, `${key}${i}${sg}`, clamp01((grow - 0.35) * 1.6)))));
+    return out;
+  };
+  const g = clamp01(local / 26);
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", opacity: k }}>
+      <AbsoluteFill style={{ boxShadow: "inset 0 0 220px 70px rgba(150,205,245,0.8), inset 0 0 60px 10px rgba(235,246,255,0.75)" }} />
+      <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
+        {[[0, 0, 0.72], [1080, 0, Math.PI - 0.72], [0, 1920, -0.9], [1080, 1920, Math.PI + 0.9], [0, 760, 0.1], [1080, 880, Math.PI - 0.1]].map(([x, y, a], i) => branch(x, y, a, 250, 2, `b${i}`, g))}
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+/* ---------- apertura a tutto schermo prima del video (G9, 24/11): dà il soggetto a un reel che parte a metà discorso («Poi, una volta uscito…»).
+   Fondo verde del marchio, occhiello + frase grande; alla fine sale e scopre il video già in movimento ---------- */
+export const Intro: React.FC<{ frames: number; kicker?: string; lines: string[]; accent?: string }> = ({ frames, kicker, lines, accent }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  if (frame >= frames + 10) return null;
+  const x = clamp01((frame - frames) / 10), up = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const k = (d: number) => spring({ frame: frame - d, fps, config: { damping: 14, stiffness: 170, mass: 0.7 } });
+  return (
+    <AbsoluteFill style={{ background: `linear-gradient(180deg, ${BRAND.green} 0%, #1C3D15 100%)`, transform: `translateY(${-up * 100}%)`, fontFamily: FONT, color: BRAND.white }}>
+      <div style={{ position: "absolute", left: 0, width: 1080, top: 700, textAlign: "center" }}>
+        {kicker ? <div style={{ display: "inline-block", background: BRAND.lime, color: INK, fontWeight: 900, fontSize: 46, letterSpacing: 3, textTransform: "uppercase", padding: "8px 26px 10px", borderRadius: 12, marginBottom: 30, opacity: clamp01(k(0) * 1.5), transform: `scale(${0.8 + 0.2 * k(0)})` }}>{kicker}</div> : null}
+        {lines.map((l, i) => <div key={i} style={{ fontWeight: 900, fontSize: fit(l, 960, 150), lineHeight: 1.03, textTransform: "uppercase", whiteSpace: "nowrap", color: l === accent ? BRAND.lime : BRAND.white, opacity: clamp01(k(3 + i * 5) * 1.5), transform: `translateY(${(1 - k(3 + i * 5)) * 50}px)` }}>{l}</div>)}
       </div>
     </AbsoluteFill>
   );

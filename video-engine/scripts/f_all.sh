@@ -7,6 +7,8 @@ cd "$(dirname "$0")/.."
 for item in "$@"; do
   ID="${item%%:*}"; V="${item##*:}"; case "$ID" in G*) Y=ytcn26;; *) Y=ytcn22;; esac
   scripts/f_queue.sh "$item" | grep -v "QUEUE FINISHED"
+  # reel senza pannello CTA (24/11: i quattro esercizi G5-G8): niente clic di «Pubblica» da attenuare (CTA_S negativo = finestra oltre la fine)
+  case "$ID" in G5-*|G6-*|G7-*|G8-*) export CTA_S=-10;; *) unset CTA_S;; esac
   OUT=out/$Y WK=work/$Y WMODEL=large-v3-turbo scripts/cn_finish.sh "$ID" "$V" 2>&1 | grep -v "^\s*at \|Memory\|docker\|lower amount" | tail -5
   python3 scripts/f_qa.py "out/$Y/consegna/${ID}_${V}.mp4"
   python3 scripts/f_flash.py "out/$Y/consegna/${ID}_${V}.mp4"

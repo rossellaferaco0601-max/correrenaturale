@@ -13,12 +13,12 @@
   "h": 800,
   "bg": "0x49762E"
  },
- "tail": 1.4,
- "tailLive": 0,
+ "tail": 1,
+ "tailLive": 0.05,
  "segments": [
   {
-   "from": 269.72,
-   "to": 319.2533
+   "from": 275.5,
+   "to": 319.2333
   }
  ],
  "crops": {

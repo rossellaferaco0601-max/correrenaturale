@@ -84,8 +84,9 @@ export type Element = ElementBase &
     | { kind: "quad"; items: string[]; foot?: string }
     | { kind: "rise"; label: string; lines: string[] }
     | { kind: "fog"; lines: string[]; accent?: string; anim?: "fog" | "rise" | "snap" | "wind" | "type" }
-    | { kind: "gem"; art: "nose" | "heat" | "house" | "over" | "warm" | "battery" | "breath" | "squat" | "climber" | "bridge" | "lunge" | "jack" | "gauge"; phases: { lines: string[]; chip?: string; on?: number }[]; artCues?: number[] }
+    | { kind: "gem"; art: "nose" | "heat" | "house" | "over" | "warm" | "battery" | "breath" | "squat" | "climber" | "bridge" | "lunge" | "jack" | "gauge" | "over3d" | "warm3d" | "warmok3d" | "mani3d" | "casa3d" | "passo3d" | "energia3d" | "nasofreddo3d" | "naso3d" | "nasofiltro3d" | "respiro3d" | "squat3d" | "squatgiu3d"; phases: { lines: string[]; chip?: string; on?: number }[]; artCues?: number[] }
     | { kind: "kin"; words: string[]; anim: "ice" | "pulse" | "slide" }
+    | { kind: "ambient"; mood: "frost" | "heat" }
     | { kind: "takeaway"; lines: string[]; accent?: string; kicker?: string; art?: string }
     | { kind: "dose"; tags?: string[]; items: string[] }
     | { kind: "ticks"; items: string[]; foot?: string }
@@ -140,6 +141,20 @@ export type CNReelProps = {
   tailHold?: number;
   /** secondi iniziali senza sottotitoli (Oscar 12/11: «la parte iniziale dove c'è l'hook visivo togliamo i sottotitoli»): ripartono dalla prima pagina intera dopo questo tempo */
   capFrom?: number;
+  /** la CTA comincia a salire questi secondi PRIMA della fine del parlato e finisce di coprire nella coda (Ross 24/11: prima della CTA non
+   *  deve restare né un «parlato muto» né uno stacco netto). Con questo campo la salita è morbida (12 fotogrammi, accelera e rallenta). */
+  ctaLead?: number;
+  /** avvicinamenti lenti della camera sul video nei passaggi senza grafica (Ross 24/11: «non vedo nessun effetto», «poco dinamico»):
+   *  da `at` (secondi del reel) per `dur` secondi il video arriva a `scale` e torna a 1 negli ultimi 14 fotogrammi; perno sul volto */
+  zooms?: { at: number; dur: number; scale: number }[];
+  /** apertura a tutto schermo PRIMA del video (Ross 24/11, G9: «metti un'introduzione tipo "quando corriamo al freddo" e poi parti con il video») */
+  intro?: { seconds: number; kicker?: string; lines: string[]; accent?: string };
+  /** corpo dei sottotitoli (default 64) */
+  capSize?: number;
+  /** reel «a finestra»: bordi alto e basso del video sfumati nel verde del fondo, in px (Ross 24/11) */
+  winFeather?: number;
+  /** banner fisso per tutto il reel (Ross 24/11, G4): invito a commentare la parola per ricevere qualcosa; sta nella fascia `y` (px) */
+  banner?: { word: string; text: string[]; y: number };
   /** selfie: in basso un solo testo alla volta. Mentre è a schermo una grafica della fascia bassa i sottotitoli si spengono (Ross 12/11: «titoli sovrapposti») */
   capHideOnGfx?: boolean;
   gfxShift?: number;

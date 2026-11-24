@@ -28,3 +28,9 @@ video-engine/work/models/
 video-engine/public/ytcn22/
 video-engine/work/**/*.npy
 video-engine/public/ytcn26/
+
+# modelli 3D scaricati (scripts/b3d/fetch.sh) e coda dei lavori
+video-engine/work/b3d/
+video-engine/work/queue.txt
+video-engine/work/queue.stop
+video-engine/work/ytcn26_shots_xcentro.json

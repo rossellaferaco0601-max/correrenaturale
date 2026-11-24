@@ -4,7 +4,7 @@ description: "Prima della CTA non si deve mai vedere la mossa/inquadratura succe
 metadata:
   node_type: memory
   type: feedback
-  modified: 2026-11-21
+  modified: 2026-11-24
 ---
 
 Ross, 17 e 18/11/2026 (serie F, YTCN 22). Prima su F1 («quello stacco strano prima della CTA, devi renderlo più fluido»), poi su F4
@@ -33,3 +33,12 @@ dell'inquadratura dopo. Corretto alla radice in `scripts/cn_master_shots.py` (il
 - Controllo obbligatorio su master e file finale di OGNI reel: `python3 scripts/f_flash.py file.mp4` (un fotogramma diverso da quello
   prima e da quello dopo = lampo). È dentro `scripts/f_all.sh`. I 15 reel della serie F, ricontrollati, erano puliti.
 - Prima di dire «il finale è a posto» guardare TUTTI i fotogrammi dell'ultimo secondo e mezzo, non uno ogni 3.
+
+**24/11/2026 (serie G, revisione di tutti i reel):** Ross su G2: «proprio prima della CTA c'è un parlato muto di Daniele, si vede che parla
+ma non c'è suono»; su G4: «poco prima della CTA c'è un taglio orribile»; su G9: «lo stacco prima della CTA è troppo netto»; «controlla
+sempre lo stacco prima della CTA». La coda `ping` (andata e ritorno) faceva scorrere all'indietro l'ultima frase per quasi un secondo:
+la bocca si muove senza audio. Quindi anche l'andata e ritorno è bocciata, come il fermo immagine e la coda dal vivo.
+- **Regola attuale: dopo l'ultima parola non resta nessun video.** La CTA comincia a salire 0,4 s PRIMA della fine del parlato e finisce
+  di coprire sull'ultima sillaba, che si sente sopra il pannello (`ctaLead 0.4`, salita morbida di 12 fotogrammi, `tailSeconds 0.1`,
+  `tailLive 0`). L'ultima grafica esce prima che il pannello parta.
+- Controllo: `python3 scripts/g_sheets.py finale file.mp4 out.jpg` (tutti i fotogrammi dell'ultimo secondo e mezzo) su OGNI reel.
