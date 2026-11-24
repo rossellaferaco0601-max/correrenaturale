@@ -39,8 +39,9 @@ class Registro:
                 viste[d] = (d, r["formato"], r["modello"])
         return sorted(viste.values(), reverse=True)
 
-    def registra(self, giorno: date, usate: list[Testimonianza], formato, modello, leva, storia, cartella):
-        self.righe = [r for r in self.righe if r["data"] != giorno.isoformat()]  # rifare un giorno non conta doppio
+    def registra(self, giorno: date, usate: list[Testimonianza], formato, modello, leva, storia, cartella, aggiungi=False):
+        if not aggiungi:
+            self.righe = [r for r in self.righe if r["data"] != giorno.isoformat()]  # rifare un giorno non conta doppio
         for t in usate:
             self.righe.append(dict(data=giorno.isoformat(), id=t.id, nome=t.nome, formato=formato, modello=modello,
                                    leva_o_taglio=leva, storia=storia, cartella=str(cartella)))

@@ -33,6 +33,10 @@ MODELLI = {
                     richiede="Ogni storia è una tappa in ordine di tempo, titoli brevi."),
     "S-voci": dict(formato="stories", nome="Voci a confronto", famiglia="voci", solo_unita=True,
                    richiede="Solo per storia unita: nelle storie centrali 1-2 citazioni brevi di allievi diversi (max 150 caratteri l'una)."),
+    "C-schermo": dict(formato="carosello", nome="Schermata del messaggio", famiglia="schermo",
+                      richiede="Le citazioni compaiono come schermate di messaggio. Il primo elemento (copertina) ha UNA citazione breve (max 150 caratteri) in cui l'allievo dice il problema; almeno altri 3 elementi hanno una citazione."),
+    "S-schermo": dict(formato="stories", nome="Schermata del messaggio", famiglia="schermo",
+                      richiede="Le citazioni compaiono come schermate di messaggio. La prima storia ha UNA citazione breve (max 140 caratteri) in cui l'allievo dice il problema; ogni storia centrale ha una citazione."),
 }
 
 
@@ -151,7 +155,7 @@ def c_virgolette(con, ctx):
             _virgolette(t, M, 110, 120, VERDE)
 
             def dis(tt, s, y, el=el):
-                y += tt.testo(M, y, CW - 2 * M, el["titolo"], 80 * s, BIANCO, peso="Black", enfasi=VERDE, inter=1.08) + round(34 * s)
+                y += tt.testo(M, y, CW - 2 * M, el["titolo"], 80 * s, BIANCO, peso="Black", enfasi=AZZURRO, inter=1.08) + round(34 * s)
                 if el.get("testo"):
                     y += tt.testo(M, y, CW - 2 * M, el["testo"], 44 * s, CREMA, inter=1.3) + round(50 * s)
                 y += tt.pillola(M, y, con["cta"]["parola"], 112 * s, VERDE, BIANCO, peso="Black", pad=(64, 22), traccia=6)[1]
@@ -467,7 +471,7 @@ def s_virgolette(con, ctx):
         ruolo, cit = el["ruolo"], el.get("citazioni") or []
         if ruolo == "cta":
             t = Tela(SW, SH, NERO)
-            _cta_storia(t, el, con["cta"], BIANCO, VERDE, VERDE, BIANCO, mescola(NERO, BIANCO, .12))
+            _cta_storia(t, el, con["cta"], BIANCO, AZZURRO, VERDE, BIANCO, mescola(NERO, BIANCO, .12))
             _piede_s(t, True)
         elif ruolo == "identificazione":
             t = Tela(SW, SH, VERDE)
@@ -585,6 +589,167 @@ def s_voci(con, ctx):
     return out
 
 
+# ═══════════════ SCHERMATA DEL MESSAGGIO (ricostruita dal testo) ════════════
+# Le parole sono quelle esatte dell'allievo, ma l'immagine è composta qui in stile brand: non è lo screenshot originale
+# e non imita nessuna app. Il titolo di copertina dice il problema; sotto spunta il messaggio di chi l'ha vissuto.
+TEMI_SCHERMO = [
+    dict(cop=NERO, tit=BIANCO, enf=AZZURRO, pill=(VERDE, BIANCO), cta=NERO, cta_enf=AZZURRO, cta_pill=(VERDE, BIANCO)),
+    dict(cop=VERDE, tit=BIANCO, enf=AZZURRO, pill=(CREMA, VERDE), cta=VERDE, cta_enf=AZZURRO, cta_pill=(CREMA, VERDE)),
+    dict(cop=CREMA, tit=NERO, enf=VERDE, pill=(VERDE, BIANCO), cta=VERDE, cta_enf=AZZURRO, cta_pill=(CREMA, VERDE)),
+    dict(cop=AZZURRO, tit=NERO, enf=VERDE, pill=(BIANCO, VERDE), cta=NERO, cta_enf=AZZURRO, cta_pill=(VERDE, BIANCO)),
+]
+ORIGINI = (("recension", "dalla sua recensione"), ("lettera", "dalla sua lettera"), ("commento", "dal suo commento"),
+           ("post", "dal suo post"))
+
+
+def origine(tipo: str) -> str:
+    return next((v for k, v in ORIGINI if (tipo or "").lower().startswith(k)), "dal suo messaggio")
+
+
+def _schermo(t: Tela, s, x, y, w, cit: list, dim=40, pannello=BIANCO, bolla=CREMA):
+    """Finestra di messaggio: intestazione con iniziale e nome, poi una nuvoletta per citazione. Restituisce l'altezza."""
+    c0 = cit[0]
+    pad, d = round(34 * s), round(72 * s)
+    testa = pad + d + round(26 * s)
+    tw = w - pad * 2 - round(28 * s) * 2
+    alt = [t.misura(tw, c["testo"], dim * s, "Regular", 1.3) + round(28 * s) * 2 for c in cit]
+    H = testa + sum(alt) + round(16 * s) * (len(cit) - 1) + pad
+    t.rett(x, y, w, H, pannello, raggio=44)
+    _avatar(t, x + pad, y + pad, d, c0)
+    t.testo(x + pad + d + round(22 * s), y + pad + round(2 * s), w - pad * 2 - d - 30, c0.get("firma") or "Un nostro allievo", 34 * s, NERO, peso="Bold")
+    t.testo(x + pad + d + round(22 * s), y + pad + round(42 * s), w - pad * 2 - d - 30, c0.get("origine") or "dal suo messaggio", 25 * s, mescola(NERO, BIANCO, .45))
+    yy = y + testa
+    for c, h in zip(cit, alt):
+        t.rett(x + pad, yy, w - pad * 2, h, bolla, raggio=30)
+        t.rett(x + pad, yy + h - 30, 30, 30, bolla)   # angolo vivo: la «coda» del messaggio
+        t.testo(x + pad + round(28 * s), yy + round(28 * s), tw, c["testo"], dim * s, NERO, inter=1.3)
+        yy += h + round(16 * s)
+    return H
+
+
+def _gruppi(cit: list) -> list[list]:
+    """Citazioni consecutive della stessa persona stanno nella stessa finestra."""
+    out = []
+    for c in cit:
+        if out and out[-1][0]["id"] == c["id"]:
+            out[-1].append(c)
+        else:
+            out.append([c])
+    return out
+
+
+def _tema_schermo(con, ctx):
+    k = ctx.get("tema")
+    if k is None:
+        k = sum(ord(ch) for ch in "".join(con.get("ids") or ["x"]))
+    return TEMI_SCHERMO[k % len(TEMI_SCHERMO)]
+
+
+def c_schermo(con, ctx):
+    els, n, out = con["elementi"], len(con["elementi"]), []
+    T = _tema_schermo(con, ctx)
+    for i, el in enumerate(els, 1):
+        ruolo, cit = el["ruolo"], el.get("citazioni") or []
+        if ruolo == "hook":
+            t = Tela(CW, CH, T["cop"])
+            scuro = T["cop"] in (NERO, VERDE)
+            t.pillola(M, 100, _etichetta(el) or "Ti succede?", 28, *T["pill"], traccia=3)
+
+            def dis(tt, s, y, el=el):
+                y += tt.testo(M, y, CW - 2 * M, el["titolo"], 96 * s, T["tit"], peso="Black", enfasi=T["enf"], inter=1.05)
+                if el.get("testo"):
+                    y += round(26 * s) + tt.testo(M, y + round(26 * s), CW - 2 * M, el["testo"], 42 * s, T["tit"], inter=1.28)
+                return y
+
+            y = adatta(t, dis, 196, 720 if cit else 1150, scale=[1.4, 1.3, 1.2, 1.1, 1, .93, .86, .8, .74, .68, .62, .56, .5])
+            if cit:
+                # la schermata spunta dal fondo della copertina: il resto del messaggio è nelle slide dopo
+                # la schermata sta tutta sotto il titolo, intera: si riduce finché entra
+                for ss in (1.25, 1.15, 1.05, .96, .88, .8, .72):
+                    hs = _schermo(t.vuota(), ss, 0, 0, CW - 2 * M + 40, cit[:1], dim=42)
+                    if y + 50 + hs <= CH - 150:
+                        break
+                _schermo(t, ss, M - 20, max(y + 50, CH - 150 - hs), CW - 2 * M + 40, cit[:1], dim=42)
+            _piede_c(t, i, n, scuro)
+        elif ruolo == "cta":
+            t = Tela(CW, CH, T["cta"])
+
+            def dis(tt, s, y, el=el):
+                y += tt.testo(M, y, CW - 2 * M, el["titolo"], 80 * s, BIANCO, peso="Black", enfasi=T["cta_enf"], inter=1.08) + round(34 * s)
+                if el.get("testo"):
+                    y += tt.testo(M, y, CW - 2 * M, el["testo"], 44 * s, CREMA, inter=1.3) + round(50 * s)
+                y += tt.pillola(M, y, con["cta"]["parola"], 112 * s, *T["cta_pill"], peso="Black", pad=(64, 22), traccia=6)[1]
+                return y
+
+            adatta(t, dis, 150, 1170, centra=True)
+            _piede_c(t, i, n, True)
+        elif cit and not el.get("titolo") and not el.get("testo"):
+            t = Tela(CW, CH, VERDE)
+            t.pillola(M, 100, _etichetta(el), 28, CREMA, VERDE, traccia=3)
+
+            def dis(tt, s, y, cit=cit):
+                for g in _gruppi(cit):
+                    y += _schermo(tt, s, M - 20, y, CW - 2 * M + 40, g, dim=50) + round(26 * s)
+                return y
+
+            adatta(t, dis, 200, 1190, centra=True)
+            _piede_c(t, i, n, True)
+        else:
+            t = Tela(CW, CH, CREMA)
+            t.pillola(M, 100, _etichetta(el), 28, VERDE, BIANCO, traccia=3)
+
+            def dis(tt, s, y, el=el, cit=cit):
+                if el.get("titolo"):
+                    y += tt.testo(M, y, CW - 2 * M, el["titolo"], 72 * s, NERO, peso="Bold", enfasi=VERDE, inter=1.1) + round(28 * s)
+                if el.get("testo"):
+                    y += tt.testo(M, y, CW - 2 * M, el["testo"], 44 * s, NERO, inter=1.32) + round(40 * s)
+                for g in _gruppi(cit):
+                    y += _schermo(tt, s, M - 20, y, CW - 2 * M + 40, g, dim=42) + round(24 * s)
+                return y
+
+            adatta(t, dis, 200, 1195, centra=True)
+            _piede_c(t, i, n, False)
+        out.append(t)
+    return out
+
+
+def s_schermo(con, ctx):
+    els, out = con["elementi"], []
+    T = _tema_schermo(con, ctx)
+    W = SW - 2 * M
+    for el in els:
+        ruolo, cit = el["ruolo"], el.get("citazioni") or []
+        if ruolo == "cta":
+            t = Tela(SW, SH, T["cta"])
+            _cta_storia(t, el, con["cta"], BIANCO, T["cta_enf"], *T["cta_pill"], mescola(T["cta"], BIANCO, .14))
+            _piede_s(t, True)
+        else:
+            ident = ruolo == "identificazione"
+            bg = T["cop"] if ident else CREMA
+            scuro = bg in (NERO, VERDE)
+            fg, enf = (T["tit"], T["enf"]) if ident else (NERO, VERDE)
+            t = Tela(SW, SH, bg)
+
+            def dis(tt, s, y, el=el, cit=cit, ident=ident, fg=fg, enf=enf):
+                lab = (_etichetta(el) or "Ti succede?") if ident else _etichetta(el)
+                if lab:
+                    y += tt.pillola(M, y, lab, 28 * s, *(T["pill"] if ident else (VERDE, BIANCO)), traccia=3)[1] + round(36 * s)
+                if el.get("titolo"):
+                    y += tt.testo(M, y, W, el["titolo"], (96 if ident else 66) * s, fg, peso="Black" if ident else "Bold", enfasi=enf, inter=1.06) + round(36 * s)
+                if el.get("testo") and ident:
+                    y += tt.testo(M, y, W, el["testo"], 44 * s, fg, inter=1.3) + round(40 * s)
+                for g in _gruppi(cit):
+                    y += _schermo(tt, s, M - 20, y, W + 40, g, dim=46) + round(26 * s)
+                if el.get("testo") and not ident:
+                    y += round(10 * s) + tt.testo(M, y + round(10 * s), W, el["testo"], 44 * s, fg, inter=1.32)
+                return y
+
+            adatta(t, dis, S_ALTO, S_BASSO - 30, centra=True)
+            _piede_s(t, scuro)
+        out.append(t)
+    return out
+
+
 # ═══════════════ IN PROVA: schermata originale del messaggio ════════════════
 # Non sono ancora nella rotazione quotidiana: servono gli allegati (cartella Drive) e la copertura di nomi e numeri.
 MODELLI_IN_PROVA = {
@@ -637,7 +802,8 @@ def s_schermata(con, ctx):
     return out
 
 
-FUNZIONI = {"C-schermata": c_schermata, "S-schermata": s_schermata, "C-virgolette": c_virgolette, "C-primadopo": c_primadopo, "C-percorso": c_percorso, "C-voci": c_voci,
+FUNZIONI = {"C-schermata": c_schermata, "S-schermata": s_schermata, "C-schermo": c_schermo, "S-schermo": s_schermo,
+            "C-virgolette": c_virgolette, "C-primadopo": c_primadopo, "C-percorso": c_percorso, "C-voci": c_voci,
             "S-messaggio": s_messaggio, "S-virgolette": s_virgolette, "S-tappe": s_tappe, "S-voci": s_voci}
 
 

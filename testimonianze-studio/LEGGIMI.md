@@ -68,6 +68,19 @@ Le anteprime in `anteprime/` usano testi di esempio inventati: servono solo a ve
 - `esegui.py` — il flusso; `ts/dati.py` foglio e pulizia; `ts/selezione.py` regole, punteggio, registro, rotazione; `ts/scrittura.py` istruzioni per Claude; `ts/controlli.py` controlli; `ts/grafica.py` motore PNG + PPTX; `ts/modelli.py` gli 8 modelli; `ts/consegna.py` file di consegna e notifica.
 - `dati/` (mai su GitHub): `testimonianze.csv`, `service-account.json`, `registro_utilizzi.csv`, `log.txt`.
 
+## Serie «problemi» (`serie.py`)
+Fuori dal calendario quotidiano: trova i problemi più ricorrenti nelle testimonianze e crea, per ognuno, un carosello e un set di stories con **il problema nel titolo di copertina** e le **schermate dei messaggi** (modelli `C-schermo` / `S-schermo`).
+```
+python serie.py analisi                                   raggruppa i problemi (dati/problemi.json)
+python serie.py genera --quanti 12 --salta periodo-buio   contenuti in Serie-problemi/NN-problema/
+python serie.py genera --solo 3                           rifà solo il problema n. 3
+python serie.py ridisegna                                 rifà solo le grafiche dopo un ritocco ai modelli
+```
+- Valgono le stesse regole del flusso quotidiano; in più la copertina non può contenere nomi, numeri o risultati e deve avere una citazione breve.
+- Ogni testimonianza entra in un solo contenuto e viene scritta nel registro: per 90 giorni il flusso quotidiano non la riusa.
+- I problemi che riguardano malattie sono esclusi dalla serie (restano utilizzabili solo come esperienza personale).
+- Le schermate riportano le parole esatte dell'allievo ma sono ricomposte in stile brand: non sono gli screenshot originali.
+
 ## In prova: schermata originale e vocale (non ancora nel flusso quotidiano)
 - `ts/schermate.py` + modelli `C-schermata` / `S-schermata`: la prima slide mostra lo screenshot vero del messaggio. Prima di usarlo, nomi, numeri, email e foto profilo vengono cercati (Claude Code legge l'immagine) e coperti con rettangoli «bruciati» nei pixel. La copertura va sempre ricontrollata a occhio.
 - `ts/vocale.py`: slide video (MP4) con l'audio originale, l'onda che avanza e le parole a tempo. Servono ffmpeg e `pip install -r requirements-audio.txt`. Le parole trascritte si correggono nel file `.parole.json` accanto al video.

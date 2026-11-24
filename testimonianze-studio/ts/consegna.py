@@ -30,14 +30,15 @@ def _foto(giorno: date, config: dict):
 
 
 def scrivi(cartella: Path, giorno: date, piano: dict, con: dict, usate: list[Testimonianza], sel: dict, avvisi: list[str],
-           config: dict) -> list[Path]:
+           config: dict, ctx: dict | None = None) -> list[Path]:
     _svuota(cartella)
     formato = piano["formato"]
     per_id = {t.id: t for t in usate}
     for el in con["elementi"]:
         for c in el.get("citazioni") or []:
             c["firma"] = per_id[c["id"]].firma
-    tele = modelli.disegna(con["modello"], con, {"foto": _foto(giorno, config)})
+            c["origine"] = modelli.origine(per_id[c["id"]].tipo)
+    tele = modelli.disegna(con["modello"], con, {"foto": _foto(giorno, config), **(ctx or {})})
     prefisso = "carosello" if formato == "carosello" else "storia"
     file = grafica.salva(tele, cartella, prefisso, pptx=("carosello.pptx" if formato == "carosello" else "stories.pptx"))
     (cartella / "caption.txt").write_text(_caption(con, formato), encoding="utf-8")

@@ -56,7 +56,7 @@ def scheda_candidato(t: Testimonianza, config: dict) -> dict:
                 evento_vicino=t.extra.get("evento") or "", testo=t.testo_pulito[:3500])
 
 
-def istruzioni(oggi: date, piano: dict, rosa: list[Testimonianza], modelli: list[str], config: dict) -> str:
+def istruzioni(oggi: date, piano: dict, rosa: list[Testimonianza], modelli: list[str], config: dict, problema: dict | None = None) -> str:
     formato = piano["formato"]
     lim, (nmin, nmax) = LIMITI[formato], NUMERO[formato]
     parole = config["cta"]["parole_carosello"]
@@ -78,15 +78,29 @@ def istruzioni(oggi: date, piano: dict, rosa: list[Testimonianza], modelli: list
 - Ogni storia si legge in pochi secondi: frasi corte.
 - Ultima storia (cta): usa lo «sticker» della testimonianza principale. «cta.tipo» = il suo tipo (sondaggio, slider, domanda, dm); «cta.sticker» = la sua domanda; «cta.parola» = la sua parola (oppure una fra {', '.join(parole)}). Il «titolo» dell'ultima storia è la domanda; il «testo» invita a scrivere in DM e finisce con i due punti (la parola compare sotto, grande).
 - «caption»: 1-2 frasi di accompagnamento per chi pubblica (max 300 caratteri), con la CTA.""")
+    if problema:
+        tema = f"""
+# 0. Il problema di questo contenuto: «{problema['titolo']}»
+{problema.get('descrizione', '')}
+- Tutto il contenuto ruota intorno a QUESTO problema. Tutti i candidati lo hanno vissuto.
+- COPERTINA (primo elemento): il «titolo» dice questo problema con le parole di chi lo vive, rivolto a chi legge (seconda persona, domanda o affermazione; puoi riformulare «{problema['titolo']}» ma il problema deve restare lo stesso e riconoscibile al primo sguardo). Nel titolo di copertina NON ci sono: il risultato, il nome dell'allievo, tempi di gara o altri numeri, la soluzione.
+- La copertina ha «testo» vuoto e UNA sola citazione breve (max 150 caratteri) in cui un allievo racconta questo problema con parole sue: sotto il titolo comparirà come schermata del suo messaggio.
+- Le citazioni compaiono come schermate dei messaggi degli allievi: sono il cuore del contenuto. Scegli i passaggi più vivi e concreti.
+"""
+        scelta = """- Usa 2 o 3 testimonianze (storia unita) quando più voci rendono il problema più riconoscibile; una sola (storia singola) se il suo «testo» basta a raccontare problema, cambiamento e risultato.
+- Scegli solo candidati il cui testo parla davvero di questo problema."""
+    else:
+        tema = ""
+        scelta = """- STORIA SINGOLA (una testimonianza): quando il suo «testo» ha abbastanza dettagli (problema chiaro, cosa è cambiato, risultato concreto). È la scelta normale.
+- STORIA UNITA (2-4 testimonianze): solo se nessuna basta da sola; devono condividere almeno una «obiezione» (o lo stesso «angolo»): es. dolori e infortuni, troppo vecchio, parto da zero, tempi fermi."""
     mod = "\n".join(f"  {k + 1}. {m} («{MODELLI[m]['nome']}») — {MODELLI[m]['richiede']}" for k, m in enumerate(modelli))
     rosa_json = json.dumps([scheda_candidato(t, config) for t in rosa], ensure_ascii=False, indent=1)
     return f"""Oggi è {oggi.strftime('%d/%m/%Y')} ({piano['giorno']}). Devi scrivere {compito}
 
 Il contenuto si costruisce SOLO sulle testimonianze degli allievi elencate in fondo (candidati).
-
+{tema}
 # 1. Scegli le testimonianze
-- STORIA SINGOLA (una testimonianza): quando il suo «testo» ha abbastanza dettagli (problema chiaro, cosa è cambiato, risultato concreto). È la scelta normale.
-- STORIA UNITA (2-4 testimonianze): solo se nessuna basta da sola; devono condividere almeno una «obiezione» (o lo stesso «angolo»): es. dolori e infortuni, troppo vecchio, parto da zero, tempi fermi.
+{scelta}
 - Preferisci, nell'ordine: «evento_vicino», «in_stagione», forza più alta, testo più ricco. I candidati sono già in ordine di preferenza.
 
 # 2. Storytelling (obbligatorio)

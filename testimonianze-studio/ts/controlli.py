@@ -91,7 +91,7 @@ def rifinisci(con: dict) -> dict:
     return con
 
 
-def controlla(con: dict, formato: str, rosa: dict[str, Testimonianza], modelli_ammessi: list[str], config: dict):
+def controlla(con: dict, formato: str, rosa: dict[str, Testimonianza], modelli_ammessi: list[str], config: dict, serie: bool = False):
     """Restituisce (errori, avvisi)."""
     err, avv = [], []
     els = con.get("elementi") or []
@@ -107,7 +107,7 @@ def controlla(con: dict, formato: str, rosa: dict[str, Testimonianza], modelli_a
     storia = con.get("storia")
     if (storia == "singola") != (len(ids) == 1) or storia not in ("singola", "unita"):
         err.append("«storia» è «singola» con una testimonianza e «unita» con 2-4.")
-    if len(usate) > 1:
+    if len(usate) > 1 and not serie:  # nelle serie il tema comune è il problema, già garantito dalla scelta dei candidati
         comuni = set.intersection(*[set(t.obiezioni) for t in usate]) | set.intersection(*[set(a.lower() for a in t.angolo) for t in usate])
         if not comuni:
             err.append("Le testimonianze di una storia unita devono avere in comune almeno una «obiezione» o un «angolo».")
@@ -135,6 +135,21 @@ def controlla(con: dict, formato: str, rosa: dict[str, Testimonianza], modelli_a
             err.append("Il primo elemento parte dal problema: non deve contenere inviti all'azione né la parola chiave.")
         if not els[0].get("titolo"):
             err.append("Il primo elemento deve avere un titolo.")
+
+    if serie and els:  # la copertina dice il problema e mostra il messaggio di chi l'ha vissuto
+        cop = els[0]
+        if len(cop.get("citazioni") or []) != 1:
+            err.append("La copertina (primo elemento) deve avere esattamente una citazione breve: è la schermata del messaggio sotto il titolo.")
+        elif len(cop["citazioni"][0]["testo"]) > 165:
+            err.append(f"La citazione di copertina è troppo lunga ({len(cop['citazioni'][0]['testo'])} caratteri, massimo 150).")
+        if re.search(r"\d", cop.get("titolo", "")):
+            err.append("Il titolo di copertina dice il PROBLEMA: niente numeri, tempi o risultati.")
+        if any(t.nome and re.search(rf"(?<![\wÀ-ÿ]){re.escape(t.nome)}(?![\wÀ-ÿ])", cop.get("titolo", "")) for t in usate):
+            err.append("Il titolo di copertina dice il PROBLEMA rivolto a chi legge: niente nome dell'allievo.")
+        if cop.get("testo"):
+            err.append("In copertina il «testo» resta vuoto: solo titolo e citazione.")
+        if sum(1 for e in els[1:] if e.get("citazioni")) < (3 if formato == "carosello" else 2):
+            err.append("Servono più schermate: almeno 3 elementi dopo la copertina con una citazione (2 per le stories).")
 
     # ── CTA ─────────────────────────────────────────────────────────────
     cta = con.get("cta") or {}

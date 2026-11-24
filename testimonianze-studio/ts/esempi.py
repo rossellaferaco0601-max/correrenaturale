@@ -66,6 +66,9 @@ def stories(unita=False):
 
 
 def per_modello(modello: str) -> dict:
-    if modello.startswith("C-"):
-        return carosello(unita=modello == "C-voci", primadopo=modello == "C-primadopo")
-    return stories(unita=modello == "S-voci")
+    con = carosello(unita=modello == "C-voci", primadopo=modello == "C-primadopo") if modello.startswith("C-") else stories(unita=modello == "S-voci")
+    if modello.endswith("schermo"):  # copertina: il problema nel titolo + il messaggio di chi l'ha vissuto
+        con["elementi"][0].update(titolo="Corri, e ogni volta torna il *dolore* al ginocchio?", testo="",
+                                  citazioni=[_c(M, "Ogni volta che aumentavo i chilometri il ginocchio mi fermava. Pensavo di non essere fatta per correre")])
+        con["ids"] = ["es1"]
+    return con

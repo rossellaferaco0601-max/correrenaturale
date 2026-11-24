@@ -168,6 +168,19 @@ class Controlli(unittest.TestCase):
         c["elementi"] = c["elementi"][:1] + c["elementi"][1:5] * 3 + c["elementi"][5:]
         self.assertTrue(any("da 6 a 9" in e for e in errori(t, c)))
 
+    def test_serie_copertina_con_il_problema(self):
+        t = riga()
+        def serie(**cop):
+            c = contenuto(t, modello="C-schermo")
+            c["elementi"][0].update(titolo="Corri e ogni volta torna il *dolore*?", testo="",
+                                    citazioni=[{"id": t.id, "testo": "con dolori al ginocchio dopo ogni uscita"}])
+            c["elementi"][0].update(cop)
+            return controlli.controlla(c, "carosello", {t.id: t}, ["C-schermo"], CONFIG, serie=True)[0]
+        self.assertEqual(serie(), [])
+        self.assertTrue(any("niente numeri" in e for e in serie(titolo="Mezza maratona in 2 ore?")))
+        self.assertTrue(any("nome dell'allievo" in e for e in serie(titolo="La storia di Mario")))
+        self.assertTrue(any("esattamente una citazione" in e for e in serie(citazioni=[])))
+
     def test_stories_massimo_sei(self):
         t = riga()
         c = contenuto(t, modello="S-tappe")
