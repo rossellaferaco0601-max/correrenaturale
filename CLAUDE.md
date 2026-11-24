@@ -6,6 +6,7 @@ Repository dedicata solo a Correre Naturale® (Daniele Vecchioni, @correrenatura
 |---|---|---|
 | `video-editing/` | Regole, contesto, brand, guide, consegne, memoria | `LEGGIMI.md`, skill `cliente-correre-naturale`, `REGOLE-MONTAGGIO.md`, `CONTESTO.md` |
 | `video-engine/` | Motore grafico (Remotion) | `video-engine/README.md` |
+| `testimonianze-studio/` | Contenuto quotidiano dalle testimonianze (stories e caroselli, Python) | `testimonianze-studio/LEGGIMI.md` |
 
 # Motore grafico video/reel (`video-engine/`)
 
@@ -64,3 +65,6 @@ Contesto e regole di montaggio stanno in `video-editing/`. Per Correre Naturale 
 `video-engine/reelstudio/` contiene il codice e i progetti di ReelStudio (la dashboard sul PC di Ross); nel cloud gira come composizione `RSReel` (asset in `video-engine/public/rs/`). Schema project.json e catalogo effetti: `video-engine/reelstudio/CLAUDE.md`. Mai committare `impostazioni.json` (chiavi API).
 
 Connettori Claude attivi sull'account: Canva, Fathom, Google Calendar, Google Drive, Google Sheets, Windsor.ai.
+
+# Testimonianze Studio (`testimonianze-studio/`)
+Flusso quotidiano che gira sul PC di Ross (Utilità di pianificazione, 10:00): foglio «Archivio Testimonianze» → scelta → scrittura con `claude -p` (abbonamento, mai chiavi API) → controlli → PNG + PPTX → `Consegne/AAAA-MM-GG/`. Regole e comandi in `testimonianze-studio/LEGGIMI.md`. Il foglio contiene dati personali: `dati/` e `Consegne/` non vanno mai in git, e nelle anteprime committate si usano solo testi di esempio. Le regole sulle testimonianze (consenso, minorenni, 90 giorni, citazioni fedeli, salute) sono applicate dal codice in `ts/selezione.py` e `ts/controlli.py`: ogni modifica va accompagnata da `python -m unittest discover prove`.

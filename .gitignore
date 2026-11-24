@@ -25,3 +25,9 @@ video-engine/public/testimonianze/
 video-engine/public/ccb/
 video-engine/public/foto-daniele/
 video-engine/work/models/
+
+# Testimonianze Studio: dati personali, chiave Google e consegne restano solo sul PC
+testimonianze-studio/dati/
+testimonianze-studio/Consegne/
+testimonianze-studio/.venv/
+*service-account*.json

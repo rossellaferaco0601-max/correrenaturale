@@ -1,0 +1,106 @@
+{
+  "_nota": "File di configurazione di Testimonianze Studio. Si può modificare con il Blocco note: attenzione a virgole e virgolette.",
+
+  "foglio": {
+    "id": "18PtxQwrxlrprw4yC3f1JwmLLUmZpbQSXIRcs41BGqjQ",
+    "scheda": "Archivio",
+    "chiave_service_account": "dati/service-account.json"
+  },
+
+  "ora_esecuzione": "10:00",
+  "cartella_consegne": "Consegne",
+
+  "calendario": {
+    "lunedi":    {"formato": "stories",   "leva": "Prospettiva"},
+    "martedi":   {"formato": "carosello", "taglio": "Educativo"},
+    "mercoledi": {"formato": "stories",   "leva": "Credibilità"},
+    "giovedi":   {"formato": "carosello", "taglio": "Pratico"},
+    "venerdi":   {"formato": "stories",   "leva": "Obiezioni"},
+    "sabato":    {"formato": "stories",   "leva": "Fiducia"},
+    "domenica":  {"formato": "stories",   "leva": "Missione"}
+  },
+
+  "leve": {
+    "_nota": "Il foglio non ha una colonna con le leve: ogni leva è ricavata da queste colonne. Basta una corrispondenza perché la testimonianza valga per la leva.",
+    "Prospettiva": {
+      "descrizione": "Far cambiare punto di vista su una convinzione che frena («è troppo tardi», «non fa per me», «parto da zero»).",
+      "obiezione": ["Sono troppo vecchio/a", "Parto da zero", "Non fa per me"],
+      "profilo": ["Over 50", "Principiante"]
+    },
+    "Credibilità": {
+      "descrizione": "Prove concrete: gare, tempi, risultati misurabili raccontati da chi li ha ottenuti.",
+      "tipo_inizia_con": ["Gara", "Recension", "Running Analysis"],
+      "obiezione": ["Sono fermo/a sui tempi"],
+      "richiede_risultato": true
+    },
+    "Obiezioni": {
+      "descrizione": "Smontare un'obiezione precisa con l'esperienza di chi aveva la stessa obiezione.",
+      "obiezione_qualsiasi": true
+    },
+    "Fiducia": {
+      "descrizione": "Il rapporto con il coach e il modo in cui si viene seguiti: perché ci si può fidare.",
+      "momento": ["Fiducia"],
+      "tipo_inizia_con": ["Feedback servizio"]
+    },
+    "Missione": {
+      "descrizione": "Perché esiste Correre Naturale: cosa cambia nella vita di una persona, oltre la corsa.",
+      "tipo_inizia_con": ["Lettera", "Messaggio a Daniele", "Salute", "Testimonianza live"],
+      "obiezione": ["Ho un problema di salute"],
+      "profilo": ["Salute"],
+      "momento": ["Ispirazione"]
+    }
+  },
+
+  "tagli": {
+    "Educativo": "Far capire, attraverso la storia, perché nasce il problema e che cosa lo cambia davvero.",
+    "Pratico": "Mostrare che cosa ha fatto in concreto l'allievo, passo dopo passo, usando solo i fatti presenti nella testimonianza."
+  },
+
+  "selezione": {
+    "stato_valido": "Catalogato",
+    "forza_preferita": 4,
+    "forza_minima": 3,
+    "giorni_senza_riuso": 90,
+    "testo_minimo_caratteri": 150,
+    "testo_storia_singola_caratteri": 400,
+    "candidati_per_claude": 10,
+    "escludi_uso_consigliato": ["Interno", "Interno / Marketing", "Interno (retention)", "Solo con consenso dei genitori"],
+    "escludi_momento_funnel": ["Interno"]
+  },
+
+  "stagioni": {
+    "_nota": "Valori della colonna «Stagione / aggancio» e periodo in cui sono in stagione (mese-giorno). In stagione, o nei 30 giorni prima, la testimonianza ha la precedenza.",
+    "anticipo_giorni": 30,
+    "Maratone d'autunno (ottobre–dicembre)": {"da": "10-01", "a": "12-31"},
+    "Maratone di primavera (marzo–aprile)": {"da": "03-01", "a": "04-30"},
+    "Settembre – ripartenza": {"da": "09-01", "a": "09-30"},
+    "Stagione trail (maggio–ottobre)": {"da": "05-01", "a": "10-31"},
+    "Estate – caldo": {"da": "06-15", "a": "08-31"},
+    "Passatore (maggio)": {"da": "05-01", "a": "05-31"},
+    "Gennaio – buoni propositi": {"da": "01-01", "a": "01-31"}
+  },
+
+  "eventi": {
+    "_nota": "Gare o eventi con una data precisa. Nei giorni prima dell'evento le testimonianze che contengono una delle «parole» hanno la precedenza assoluta. Esempio: {\"nome\": \"Maratona di Roma\", \"data\": \"2027-03-21\", \"parole\": [\"Roma\"]}",
+    "giorni_prima": 21,
+    "elenco": []
+  },
+
+  "cta": {
+    "parole_carosello": ["CORRO", "PIANO", "GUIDA", "SCUOLA"],
+    "parola_predefinita": "CORRO",
+    "_nota_link": "Nella colonna «Sticker / CTA» molte righe dicono «+ link RS»: il link viene sostituito con l'invito in DM con la parola predefinita."
+  },
+
+  "grafica": {
+    "usa_foto": true,
+    "_nota_foto": "Le foto stanno in assets/foto. Foto e testo occupano sempre zone separate della slide."
+  },
+
+  "claude": {
+    "comando": "claude",
+    "modello": "",
+    "tentativi": 2,
+    "attesa_secondi": 600
+  }
+}
