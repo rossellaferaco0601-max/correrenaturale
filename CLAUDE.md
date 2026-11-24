@@ -57,6 +57,10 @@ scripts/f_queue.sh F2-ciclista:v1 F3-fastidi:v1   # coda render della serie F; f
 scripts/f_queue.sh G2-strati:v1                  # serie G (YTCN 26, «Correre al freddo»): stessi script della serie F (scripts/f_series.ts), cartelle ytcn26; finitura con OUT=out/ytcn26 WK=work/ytcn26
 npx tsx work/ytcn26/gem_preview.tsx GemLayers out/chk/gem '{"stage":2,"cue":0.4,"fx":[1.4,2.6]}' 0.3,1,2   # pagine di controllo di un'illustrazione scritta da Gemini (src/cn/gem)
 python3 scripts/g13_bands.py && npx remotion render G13-quattro out/ytcn26/G13_raw.mp4   # reel «a fasce» (quattro esercizi + fascia banner, 30 s, muto); guida in PDF: python3 work/ytcn26/guida/build.py && node work/ytcn26/guida/export.js out/ytcn26/guida
+scripts/g_runner.sh &                            # coda UNICA dei lavori pesanti (master, render Remotion, render Blender): una riga di work/queue.txt alla volta, log in out/runner.log; mai due lavori pesanti insieme (24/11: riavvio della macchina)
+python3 scripts/g_voce_src.py public/ytcn26/ytcn26_src.mp4 && python3 scripts/g_unify.py work/ytcn26_shots.json   # sorgente nuovo: via la musica che ha dentro (resta *_conmusica.mp4) e stesso ritaglio per gli stacchi nella stessa camera
+python3 scripts/g_sheets.py inquadrature public/ytcn26/masters/G2-strati.mp4 out/chk/a.jpg ; python3 scripts/g_sheets.py finale out/ytcn26/consegna/G2-strati_v3.mp4 out/chk/b.jpg   # fogli da GUARDARE: volto al centro in ogni inquadratura; ultimo secondo e mezzo prima della CTA
+scripts/b3d/fetch.sh && blender -b -P scripts/b3d/render.py -- g1 public/ytcn26/b3d/g1 [fase …] [--still]   # corridore 3D (corpo MakeHuman vestito da corsa) a fasi che si chiudono in ciclo; set g1 g3 g4 g9 g10 g12, agganciati alle parole in src/cn/gem/B3D.tsx
 ```
 
 ## Clienti
@@ -66,6 +70,8 @@ Contesto e regole di montaggio stanno in `video-editing/`. Per Correre Naturale 
 - Le sorgenti (video/audio/immagini) vanno in `video-engine/public/` e si caricano con `staticFile()`.
 - Ogni animazione è funzione pura di `useCurrentFrame()`; niente timer o CSS transition nel render.
 - Controlla uno still prima di un render completo. Output in `video-engine/out/` (ignorato da git).
+- Un solo lavoro pesante alla volta (master FFmpeg, render Remotion, render Blender): passano tutti dalla coda `scripts/g_runner.sh`.
+- Niente persone disegnate in SVG nelle animazioni: corridore 3D (`scripts/b3d/`) o immagini/clip generate; nei reel non si consegna musica (se il sorgente ne ha, si toglie dal sorgente).
 - Le chiavi API (ElevenLabs, Runway) vanno nei secret dell'ambiente, mai nel repo.
 
 `video-engine/reelstudio/` contiene il codice e i progetti di ReelStudio (la dashboard sul PC di Ross); nel cloud gira come composizione `RSReel` (asset in `video-engine/public/rs/`). Schema project.json e catalogo effetti: `video-engine/reelstudio/CLAUDE.md`. Mai committare `impostazioni.json` (chiavi API).

@@ -314,7 +314,7 @@ Ricapitolando: scaldati bene prima di uscire e nei primi minuti fai un riscaldam
         { kind: "kin", anim: "pulse", at: 29.4, word: "controllata", dur: 2.6, cues: ["controllata", "piacevole"], words: ["Controllata", "e piacevole"] },
         { kind: "gem", dy: -19, art: "naso3d", at: 33.2, word: "imparare", dur: 7.4, cues: ["naso", "riscaldare", "umidificare"], phases: [{ lines: ["Respira", "dal naso"] }, { lines: ["Riscalda", "l'aria"] }, { lines: ["Umidifica", "l'aria"] }], artCues: [1, 2] },
         // da 40,8 a 44,9 il sorgente è in primo piano (mento a 0,53): niente grafica, solo sottotitoli
-        { kind: "gem", dy: -19, art: "nasofiltro3d", at: 45.2, word: "ebbene", dur: 6.2, cues: ["naturale", "filtrarla", "proteggere"], phases: [{ lines: ["Il modo", "naturale"] }, { lines: ["La filtra"] }, { lines: ["Protegge le vie", "respiratorie"] }], artCues: [1, 2] },
+        { kind: "gem", dy: -19, art: "nasofiltro3d", at: 45.2, word: "ebbene", dur: 6.2, cues: ["naturale", "filtrarla", "proteggere"], phases: [{ lines: ["Il modo", "naturale"] }, { lines: ["La filtra"] }, { lines: ["Protegge", "le vie", "respiratorie"] }], artCues: [1, 2] },
       ],
       zooms: [{ at: 19.0, dur: 4.0, scale: 1.07 }],
       cta: { word: PAROLA, title: "Vuoi respirare bene anche al freddo?" },
@@ -363,7 +363,7 @@ Respirare bene non rende solo più confortevole la corsa al freddo: ti dà una s
         { kind: "gem", dy: -19, art: "squat3d", at: 4.9, word: "per", dur: 12.5, cues: ["squat", "ambiente"], phases: [{ lines: ["Il movimento", "più potente"], on: -1 }, { lines: ["Squat", "naturale"], on: 0 }, { lines: ["Al chiuso", "o al riparo"], on: 1 }] },
         { kind: "gem", dy: -19, art: "squatgiu3d", at: 20.3, word: "solo", dur: 9.5, cues: ["recupero", "manutenzione", "indolenzimenti"], phases: [{ lines: ["Migliora", "il recupero"] }, { lines: ["Fa", "manutenzione"] }, { lines: ["Meno", "indolenzimenti"] }] },
         { kind: "kin", anim: "slide", at: 31.0, word: "dedicare", dur: 2.7, cues: ["pochi", "minuti"], words: ["Pochi minuti", "al recupero"] },
-        { kind: "gem", dy: -19, art: "squatgiu3d", at: 34.0, word: "bastano", dur: 9.0, cues: ["3-4", "investimento", "qualità"], phases: [{ lines: ["Bastano", "3-4 minuti"] }, { lines: ["Un investimento", "che ripaga"] }, { lines: ["Qualità", "e salute"] }] },
+        { kind: "gem", dy: -19, art: "squatgiu3d", at: 34.0, word: "bastano", dur: 9.0, cues: ["3-4", "investimento", "qualità"], phases: [{ lines: ["Bastano", "3-4 minuti"] }, { lines: ["Investimento", "che ripaga"] }, { lines: ["Qualità", "e salute"] }] },
       ],
       zooms: [{ at: 17.6, dur: 2.6, scale: 1.06 }],
       cta: { word: PAROLA, title: "Vuoi recuperare meglio dopo la corsa?" },

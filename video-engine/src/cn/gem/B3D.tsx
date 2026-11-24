@@ -11,8 +11,8 @@ import { Img, staticFile } from "remotion";
 const N = 40;
 type Fx = "cold" | "hot" | "warm" | null;
 type Over = React.FC<{ t: number; k: number; tp: number }>;   // t = tempo dell'elemento, k = ingresso della fase (0..1), tp = secondi dall'inizio della fase
-type Phase = { name: string; fx?: Fx; over?: Over; once?: boolean };
-type Set = { dir: string; phases: Phase[]; /** inizio (secondi) di ogni fase a partire dalle parole-aggancio; la fase 0 parte da 0; negativo = mai */ sched: (c: number[]) => number[]; back?: React.ReactNode };
+type Phase = { name: string; fx?: Fx; over?: Over; once?: boolean; /** ingrandimento della fase: [scala, x, y del punto fermo]; entra con la fase */ zoom?: [number, number, number] };
+type Set = { dir: string; phases: Phase[]; /** inizio (secondi) di ogni fase a partire dalle parole-aggancio; la fase 0 parte da 0; negativo = mai */ sched: (c: number[]) => number[]; back?: React.ReactNode; /** ingrandimento di figura ed effetti dentro il fondale: [scala, x, y del punto che resta fermo] */ zoom?: [number, number, number] };
 const HALO: Record<string, string> = { cold: "rgba(150,210,255,0.6)", hot: "rgba(255,90,50,0.65)", warm: "rgba(255,170,60,0.6)" };
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const src = (dir: string, name: string, f: number) => staticFile(`ytcn26/b3d/${dir}/${name}_${String(f).padStart(3, "0")}.png`);
@@ -115,15 +115,20 @@ export const makeB3D = (set: Set): React.FC<{ t: number; uid: string; cues: numb
   const fr = (i: number) => (set.phases[i].once ? Math.min(N - 1, Math.max(0, Math.floor((t - (i === 0 ? 0 : st[i])) * 30))) : loop);
   const A = set.phases[prev], B = set.phases[idx], tp = t - (idx === 0 ? 0 : st[idx]);
   const img: React.CSSProperties = { position: "absolute", left: 0, top: 0, width: 300, height: 300 };
+  // ingrandimento: quello del set, oppure quello della fase (che entra piano con la fase)
+  const zA = A.zoom ?? set.zoom ?? [1, 150, 150], zB = B.zoom ?? set.zoom ?? [1, 150, 150], ke = k * k * (3 - 2 * k), kz = B.zoom && !A.zoom ? clamp01(tp / 0.9) * clamp01(tp / 0.9) * (3 - 2 * clamp01(tp / 0.9)) : ke;
+  const ZS = zA[0] + (zB[0] - zA[0]) * kz, ZO = B.zoom ?? A.zoom ?? set.zoom ?? [1, 150, 150];
   const halo = (fx: string, o: number) => <div style={{ position: "absolute", left: 20, top: 10, width: 260, height: 280, borderRadius: "50%", background: `radial-gradient(closest-side, ${HALO[fx]}, rgba(0,0,0,0))`, opacity: o }} />;
   return (
     <div style={{ position: "relative", width: 300, height: 300, borderRadius: 26, overflow: "hidden", background: "radial-gradient(circle at 50% 38%, #6BA944 0%, #49762E 55%, #2F4D1E 100%)" }}>
       {set.back}
       {A.fx && k < 1 ? halo(A.fx, 1 - k) : null}
       {B.fx ? halo(B.fx, k * (0.82 + 0.18 * Math.sin(t * 3.2))) : null}
-      {k < 1 ? <Img src={src(set.dir, A.name, fr(prev))} style={img} /> : null}
-      <Img src={src(set.dir, B.name, fr(idx))} style={{ ...img, opacity: k }} />
-      {B.over ? <B.over t={t} k={k} tp={tp} /> : null}
+      <div style={{ position: "absolute", left: 0, top: 0, width: 300, height: 300, transform: `scale(${ZS})`, transformOrigin: `${ZO[1]}px ${ZO[2]}px` }}>
+        {k < 1 ? <Img src={src(set.dir, A.name, fr(prev))} style={img} /> : null}
+        <Img src={src(set.dir, B.name, fr(idx))} style={{ ...img, opacity: k }} />
+        {B.over ? <B.over t={t} k={k} tp={tp} /> : null}
+      </div>
     </div>
   );
 };
@@ -161,9 +166,10 @@ export const B3DEnergia = makeB3D({ dir: "g9", phases: [
 ], sched: () => [0] });
 
 /* G10 · respirare dal naso al freddo */
-export const B3DNasoFreddo = makeB3D({ dir: "g10", phases: [{ name: "naso_0", fx: "cold", over: Air("sharp") }], sched: () => [0] });
-export const B3DNaso = makeB3D({ dir: "g10", phases: [{ name: "naso_0", fx: "cold", over: Air("nose") }, { name: "naso_1", fx: "warm", over: Air("warm") }, { name: "naso_1", fx: "warm", over: Air("humid") }], sched: (c) => [0, at(c, 0), at(c, 1)] });
-export const B3DNasoFiltro = makeB3D({ dir: "g10", phases: [{ name: "naso_1", fx: "warm", over: Air("warm") }, { name: "naso_1", fx: "warm", over: Air("filter") }, { name: "naso_1", fx: "warm", over: Air("shield") }], sched: (c) => [0, at(c, 0), at(c, 1)] });
+const NZ: [number, number, number] = [1.32, 118, 190];   // la testa più grande nel fondale: si deve leggere il percorso dell'aria
+export const B3DNasoFreddo = makeB3D({ dir: "g10", zoom: NZ, phases: [{ name: "naso_0", fx: "cold", over: Air("sharp") }], sched: () => [0] });
+export const B3DNaso = makeB3D({ dir: "g10", zoom: NZ, phases: [{ name: "naso_0", fx: "cold", over: Air("nose") }, { name: "naso_1", fx: "warm", over: Air("warm") }, { name: "naso_1", fx: "warm", over: Air("humid") }], sched: (c) => [0, at(c, 0), at(c, 1)] });
+export const B3DNasoFiltro = makeB3D({ dir: "g10", zoom: NZ, phases: [{ name: "naso_1", fx: "warm", over: Air("warm") }, { name: "naso_1", fx: "warm", over: Air("filter") }, { name: "naso_1", fx: "warm", over: Air("shield") }], sched: (c) => [0, at(c, 0), at(c, 1)] });
 
 /* G11 · niente affanno: corsa leggera con il respiro regolare (onda calma); l'affanno è l'onda rossa e irregolare */
 export const B3DRespiro = makeB3D({ dir: "g9", phases: [
@@ -173,5 +179,6 @@ export const B3DRespiro = makeB3D({ dir: "g9", phases: [
 ], sched: (c) => [0, at(c, 0), at(c, 1)] });
 
 /* G12 · squat naturale: in piedi → scende (una volta) → resta accovacciato */
-export const B3DSquat = makeB3D({ dir: "g12", phases: [{ name: "squat_0" }, { name: "squat_1", once: true }, { name: "squat_2", fx: "warm" }], sched: (c) => [0, at(c, 0), at(c, 0, 1.25)] });
-export const B3DSquatGiu = makeB3D({ dir: "g12", phases: [{ name: "squat_2", fx: "warm" }], sched: () => [0] });
+const SQ: [number, number, number] = [1.5, 150, 262];   // accovacciata la figura è bassa nel fondale: la si avvicina
+export const B3DSquat = makeB3D({ dir: "g12", phases: [{ name: "squat_0" }, { name: "squat_1", once: true }, { name: "squat_2", fx: "warm", zoom: SQ }], sched: (c) => [0, at(c, 0), at(c, 0, 1.25)] });
+export const B3DSquatGiu = makeB3D({ dir: "g12", zoom: SQ, phases: [{ name: "squat_2", fx: "warm" }], sched: () => [0] });
