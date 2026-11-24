@@ -153,6 +153,8 @@ export type CNReelProps = {
   capSize?: number;
   /** reel «a finestra»: bordi alto e basso del video sfumati nel verde del fondo, in px (Ross 24/11) */
   winFeather?: number;
+  /** sfumatura del solo bordo alto, se diversa (G8: quando Daniele parla in piedi la testa arriva vicino al bordo e non deve velarsi) */
+  winFeatherTop?: number;
   /** banner fisso per tutto il reel (Ross 24/11, G4): invito a commentare la parola per ricevere qualcosa; sta nella fascia `y` (px) */
   banner?: { word: string; text: string[]; y: number };
   /** selfie: in basso un solo testo alla volta. Mentre è a schermo una grafica della fascia bassa i sottotitoli si spengono (Ross 12/11: «titoli sovrapposti») */

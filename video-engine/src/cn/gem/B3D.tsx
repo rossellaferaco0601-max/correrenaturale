@@ -41,8 +41,8 @@ const Sweat: Over = ({ t, k }) => (
 );
 
 /* ---------- aria nel naso (G10): la testa è di profilo, rivolta a sinistra. Percorso: davanti al naso → cavità nasale → gola → petto ---------- */
-const AIR: [number, number][] = [[20, 150], [70, 148], [108, 146], [140, 140], [168, 148], [178, 176], [182, 214], [190, 256], [200, 296]];
-const MOUTH: [number, number][] = [[24, 176], [74, 172], [112, 168], [150, 172], [176, 190], [184, 222], [192, 258], [200, 296]];
+const AIR: [number, number][] = [[18, 156], [64, 155], [104, 154], [136, 147], [162, 153], [172, 182], [176, 216], [184, 256], [194, 296]];
+const MOUTH: [number, number][] = [[22, 180], [70, 178], [112, 176], [146, 176], [168, 190], [176, 220], [184, 256], [194, 296]];
 const along = (pts: [number, number][], u: number): [number, number] => { const x = clamp01(u) * (pts.length - 1), i = Math.min(pts.length - 2, Math.floor(x)), f = x - i; return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f]; };
 const mix = (a: number[], b: number[], f: number) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * clamp01(f))).join(",")})`;
 /** mode: sharp = aria gelida dalla bocca, punte azzurre fino al petto che fa male; nose = entra dal naso ancora fredda; warm = nel naso diventa calda;
@@ -59,7 +59,7 @@ const Air = (mode: "sharp" | "nose" | "warm" | "humid" | "filter" | "shield"): O
           ? <polygon key={i} points={`${x - 9},${y + wob} ${x},${y - 5 + wob} ${x + 9},${y + wob} ${x},${y + 5 + wob}`} fill="#DDF1FF" stroke="#7CC4FF" strokeWidth={1.5} opacity={Math.sin(Math.PI * u) * 0.95} />
           : <circle key={i} cx={x} cy={y + wob} r={u < heat ? 6.5 : 7.5} fill={col} opacity={Math.sin(Math.PI * u) * 0.95} />;
       })}
-      {mode === "sharp" ? <circle cx={196} cy={270} r={26 + 6 * Math.sin(t * 7)} fill="none" stroke={HOT} strokeWidth={5} opacity={0.6 + 0.4 * Math.sin(t * 7)} /> : null}
+      {mode === "sharp" ? <circle cx={190} cy={270} r={26 + 6 * Math.sin(t * 7)} fill="none" stroke={HOT} strokeWidth={5} opacity={0.6 + 0.4 * Math.sin(t * 7)} /> : null}
       {mode === "humid" ? [0, 1, 2].map((i) => { const u = (t * 0.5 + i / 3) % 1, [x, y] = along(AIR, 0.38 + u * 0.3); return <path key={i} d={`M${x} ${y - 16} q -6 9 0 13 q 6 -4 0 -13`} fill="#9BD8FF" opacity={Math.sin(Math.PI * u)} />; }) : null}
       {mode === "filter" ? [0, 1, 2, 3, 4].map((i) => { const u = Math.min(1, ((t * 0.5 + i / 5) % 1) * 1.6), x = 14 + u * 84 + (u >= 1 ? Math.sin(t * 9 + i) * 2 : 0), y = 132 + i * 8; return <rect key={i} x={x} y={y} width={7} height={7} rx={1.5} fill="#3A2A1C" stroke="#F4F1E5" strokeWidth={1.2} opacity={u >= 1 ? 0.9 : 0.85} transform={`rotate(${t * 80 + i * 40} ${x + 3.5} ${y + 3.5})`} />; }) : null}
     </svg>
@@ -97,10 +97,10 @@ const Battery: React.FC<{ level: number; t: number; k: number }> = ({ level, t, 
 /** onda del respiro regolare che scorre dal naso (x, y) */
 const BreathWave: React.FC<{ t: number; k: number; calm: boolean }> = ({ t, k, calm }) => {
   const pts: string[] = []; const amp = calm ? 13 : 24, f = calm ? 0.055 : 0.13;
-  for (let x = 0; x <= 150; x += 5) pts.push(`${14 + x},${58 + Math.sin(x * f - t * (calm ? 3.2 : 9)) * amp * (calm ? 1 : 0.6 + 0.4 * Math.sin(x * 0.31))}`);
+  for (let x = 0; x <= 96; x += 4) pts.push(`${191 + x},${58 + Math.sin(x * f * 1.5 - t * (calm ? 3.2 : 9)) * amp * (calm ? 1 : 0.6 + 0.4 * Math.sin(x * 0.31))}`);
   return (
     <svg width={300} height={300} style={{ position: "absolute", left: 0, top: 0, opacity: k }}>
-      <rect x={8} y={22} width={166} height={72} rx={14} fill="rgba(11,15,10,0.8)" />
+      <rect x={184} y={22} width={110} height={72} rx={14} fill="rgba(11,15,10,0.8)" />
       <polyline points={pts.join(" ")} fill="none" stroke={calm ? LIME : HOT} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -140,8 +140,8 @@ export const B3DWarmOk = makeB3D({ dir: "g1", phases: [{ name: "warm_2", fx: "wa
 /* G3 · mani e testa: a mani e testa scoperte il calore esce da lì; poi guanti e fascia, poi guanti e cappello */
 const heatLoss: Over = ({ t, k }) => (
   <>
-    <Spot x={92} y={96} r={40} t={t} k={k} /><Spot x={176} y={92} r={40} t={t + 0.4} k={k} /><Spot x={148} y={36} r={44} t={t + 0.8} k={k} />
-    <Waves pts={[[84, 70], [104, 64], [168, 66], [188, 60], [134, 12], [162, 12]]} t={t} k={k} rise={30} />
+    <Spot x={88} y={80} r={40} t={t} k={k} /><Spot x={170} y={80} r={40} t={t + 0.4} k={k} /><Spot x={148} y={34} r={44} t={t + 0.8} k={k} />
+    <Waves pts={[[78, 58], [98, 52], [160, 54], [180, 50], [132, 14], [164, 14]]} t={t} k={k} rise={30} />
   </>
 );
 export const B3DMani = makeB3D({ dir: "g3", phases: [{ name: "mani_0", fx: "cold", over: heatLoss }, { name: "mani_1" }, { name: "mani_2", fx: "warm" }], sched: (c) => [0, at(c, 0), at(c, 1)] });
@@ -155,9 +155,9 @@ const House = (
 export const B3DCasa = makeB3D({ dir: "g4", back: House, phases: [{ name: "casa_0", fx: "cold" }, { name: "casa_1" }, { name: "casa_2", fx: "warm", over: ({ t, k }) => <Waves pts={[[76, 150], [226, 150]]} t={t} k={k} color={WARM} /> }], sched: (c) => [0, at(c, 0), at(c, 1)] });
 
 /* G9 · corsa di riscaldamento: al passo, intensità molto bassa (lancetta in basso); poi corsa leggera con la batteria piena */
-export const B3DPasso = makeB3D({ dir: "g9", phases: [{ name: "passo_0", over: ({ t, k }) => <><Ground t={t} v={-70} /><Dial level={0.16} t={t} k={k} /></> }], sched: () => [0] });
+export const B3DPasso = makeB3D({ dir: "g9", phases: [{ name: "passo_0", over: ({ t, k }) => <><Ground t={t} v={70} /><Dial level={0.16} t={t} k={k} /></> }], sched: () => [0] });
 export const B3DEnergia = makeB3D({ dir: "g9", phases: [
-  { name: "passo_1", fx: "warm", over: ({ t, k, tp }) => <><Ground t={t} v={-150} /><Battery level={0.5 + 0.5 * clamp01(tp / 1.6)} t={t} k={k} /></> },
+  { name: "passo_1", fx: "warm", over: ({ t, k, tp }) => <><Ground t={t} v={150} /><Battery level={0.5 + 0.5 * clamp01(tp / 1.6)} t={t} k={k} /></> },
 ], sched: () => [0] });
 
 /* G10 · respirare dal naso al freddo */
@@ -167,9 +167,9 @@ export const B3DNasoFiltro = makeB3D({ dir: "g10", phases: [{ name: "naso_1", fx
 
 /* G11 · niente affanno: corsa leggera con il respiro regolare (onda calma); l'affanno è l'onda rossa e irregolare */
 export const B3DRespiro = makeB3D({ dir: "g9", phases: [
-  { name: "passo_1", over: ({ t, k }) => <><Ground t={t} v={-150} /><BreathWave t={t} k={k} calm /></> },
-  { name: "passo_1", over: ({ t, k }) => <><Ground t={t} v={-150} /><BreathWave t={t} k={k} calm={false} /></> },
-  { name: "passo_1", fx: "warm", over: ({ t, k }) => <><Ground t={t} v={-150} /><BreathWave t={t} k={k} calm /></> },
+  { name: "passo_1", over: ({ t, k }) => <><Ground t={t} v={150} /><BreathWave t={t} k={k} calm /><Breath x={126} y={52} t={t} k={k * 0.8} dir={-1} rate={0.45} /></> },
+  { name: "passo_1", over: ({ t, k }) => <><Ground t={t} v={150} /><BreathWave t={t} k={k} calm={false} /><Breath x={126} y={56} t={t} k={k} dir={-1} rate={1.5} /></> },
+  { name: "passo_1", fx: "warm", over: ({ t, k }) => <><Ground t={t} v={150} /><BreathWave t={t} k={k} calm /><Breath x={126} y={52} t={t} k={k * 0.8} dir={-1} rate={0.45} /></> },
 ], sched: (c) => [0, at(c, 0), at(c, 1)] });
 
 /* G12 · squat naturale: in piedi → scende (una volta) → resta accovacciato */

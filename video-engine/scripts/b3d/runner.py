@@ -49,6 +49,10 @@ def build():
     suit.hide_render = True
     extra = {"gilet": gilet, "giacca": jacket, "piumino": puffy, "guanti": gloves, "cappello": cap, "fascia": band}
     for o in extra.values(): o.hide_render = True
+    # le pose si calcolano con molti aggiornamenti della scena: nella vista i modificatori (suddivisione, spessore, scheletro) restano spenti,
+    # così ogni aggiornamento costa poco; nel render valgono tutti (24/11: da 7,5 a ~2 s a fotogramma)
+    for o in bpy.data.objects:
+        for m in o.modifiers: m.show_viewport = False
     return {"arm": arm, "body": body, "hair": hair, "beard": beard, "top": top, "legs": legs, "shoes": shoes, **extra}
 
 def show(r, *names):

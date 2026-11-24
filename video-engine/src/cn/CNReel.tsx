@@ -178,7 +178,7 @@ export const CNReel: React.FC<CNReelProps> = (p) => {
         </AbsoluteFill>
         </AbsoluteFill>
         {/* reel a finestra: i bordi del video sfumano nel verde del fondo (niente riga netta tra video e fasce) */}
-        {p.winFeather ? [0, 1].map((b) => <div key={b} style={{ position: "absolute", left: 0, width: 1080, top: b ? 1380 - p.winFeather! : 580, height: p.winFeather, background: `linear-gradient(${b ? 0 : 180}deg, #49762E 0%, rgba(73,118,46,0.75) 30%, rgba(73,118,46,0) 100%)` }} />) : null}
+        {p.winFeather ? [0, 1].map((b) => { const h = b ? p.winFeather! : p.winFeatherTop ?? p.winFeather!; return <div key={b} style={{ position: "absolute", left: 0, width: 1080, top: b ? 1380 - h : 580, height: h, background: `linear-gradient(${b ? 0 : 180}deg, #49762E 0%, rgba(73,118,46,0.75) 30%, rgba(73,118,46,0) 100%)` }} />; }) : null}
         {p.hook ? <Hook hook={p.hook} /> : null}
         <AbsoluteFill style={{ transform: `translateY(${p.gfxShift ?? 0}px) scale(${p.gfxScale ?? 1})`, transformOrigin: `50% ${H * 0.44}px` }}>
           {/* l'intestazione sparisce 1,3 s prima della fine del parlato e non torna per pochi fotogrammi dopo l'ultima grafica */}

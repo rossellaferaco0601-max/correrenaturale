@@ -214,7 +214,7 @@ const ARTS = { nose: GemNose, heat: GemHeat, house: GemHouse, over: GemOver, war
 export type GemArt = keyof typeof ARTS;
 /** quanto ingrandire ogni disegno (e di quanto spostarlo) perché riempia la sua metà del pannello: le tele sono 300x300 ma il soggetto non
  *  le occupa tutte allo stesso modo (Ross 21/11: «le animazioni le farei leggermente più grandi») */
-const ART_FIT = { nose: [1.14, 0, 0], heat: [1.24, 0, -12], house: [1.16, 0, -6], over: [1.5, -12, -16], warm: [1.42, 0, 0], battery: [1.36, -20, -42], breath: [1.14, 0, 0], squat: [1.12, 0, -4], climber: [1.14, 4, -34], bridge: [1.14, 4, -58], lunge: [1.24, 6, -30], jack: [1.24, 0, -22], gauge: [1.14, 0, -10], ...Object.fromEntries(["over3d", "warm3d", "warmok3d", "mani3d", "casa3d", "passo3d", "energia3d", "nasofreddo3d", "naso3d", "nasofiltro3d", "respiro3d", "squat3d", "squatgiu3d"].map((k) => [k, [1.02, 0, 0]])) } as Record<GemArt, [number, number, number]>;
+const ART_FIT = { nose: [1.14, 0, 0], heat: [1.24, 0, -12], house: [1.16, 0, -6], over: [1.5, -12, -16], warm: [1.42, 0, 0], battery: [1.36, -20, -42], breath: [1.14, 0, 0], squat: [1.12, 0, -4], climber: [1.14, 4, -34], bridge: [1.14, 4, -58], lunge: [1.24, 6, -30], jack: [1.24, 0, -22], gauge: [1.14, 0, -10], ...Object.fromEntries(["over3d", "warm3d", "warmok3d", "mani3d", "casa3d", "passo3d", "energia3d", "nasofreddo3d", "naso3d", "nasofiltro3d", "respiro3d", "squat3d", "squatgiu3d"].map((k) => [k, [1.08, 0, 0]])) } as Record<GemArt, [number, number, number]>;
 export const Gem: React.FC<P<"gem">> = ({ el, start }) => {
   const { fps } = useVideoConfig();
   const { local, s, out, visible } = useInOut(start, Math.round(el.dur * fps));
@@ -357,7 +357,7 @@ export const Takeaway: React.FC<P<"takeaway">> = ({ el, start }) => {
   const k = (d: number) => spring({ frame: local - d, fps, config: { damping: 14, stiffness: 160, mass: 0.7 } });
   return (
     <AbsoluteFill style={{ background: BRAND.green, transform: `translateY(${(1 - up) * 100}%)`, fontFamily: FONT, color: BRAND.white }}>
-      {Art ? <div style={{ position: "absolute", left: 390, top: 400, width: 300, height: 300, transform: `scale(${1.95 * (0.8 + 0.2 * k(4))})`, opacity: k(4) }}><Art t={local / fps + 20} uid={`tk${start}`} cues={[-1, -1, -1, -1, -1, -1]} /></div> : null}
+      {Art ? <div style={{ position: "absolute", left: 390, top: 400, width: 300, height: 300, transform: `scale(${(String(el.art).endsWith("3d") ? 1.62 : 1.95) * (0.8 + 0.2 * k(4))})`, opacity: k(4) }}><Art t={local / fps + 20} uid={`tk${start}`} cues={[-1, -1, -1, -1, -1, -1]} /></div> : null}
       <div style={{ position: "absolute", left: 0, width: 1080, top: 830, textAlign: "center", opacity: k(8), transform: `translateY(${(1 - k(8)) * 40}px)` }}>
         <div style={{ fontWeight: 800, fontSize: 48, letterSpacing: 4, textTransform: "uppercase", color: CREAM, marginBottom: 18 }}>{el.kicker ?? "Da ricordare"}</div>
         {el.lines.map((l, i) => <div key={i} style={{ fontWeight: 900, fontSize: fit(l, 940, 132), lineHeight: 1.04, textTransform: "uppercase", whiteSpace: "nowrap", color: l === el.accent ? BRAND.lime : BRAND.white }}>{l}</div>)}
@@ -409,9 +409,10 @@ export const Ambient: React.FC<P<"ambient">> = ({ el, start }) => {
   const g = clamp01(local / 26);
   return (
     <AbsoluteFill style={{ pointerEvents: "none", opacity: k }}>
-      <AbsoluteFill style={{ boxShadow: "inset 0 0 220px 70px rgba(150,205,245,0.8), inset 0 0 60px 10px rgba(235,246,255,0.75)" }} />
+      <AbsoluteFill style={{ boxShadow: "inset 0 0 150px 36px rgba(150,205,245,0.8), inset 0 0 50px 8px rgba(235,246,255,0.75)" }} />
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-        {[[0, 0, 0.72], [1080, 0, Math.PI - 0.72], [0, 1920, -0.9], [1080, 1920, Math.PI + 0.9], [0, 760, 0.1], [1080, 880, Math.PI - 0.1]].map(([x, y, a], i) => branch(x, y, a, 250, 2, `b${i}`, g))}
+        {/* solo i quattro angoli: ai lati, a metà altezza, nei primi piani c'è il viso */}
+        {[[0, 0, 0.9, 210], [1080, 0, Math.PI - 0.9, 210], [0, 1920, -0.9, 260], [1080, 1920, Math.PI + 0.9, 260]].map(([x, y, a, len], i) => branch(x, y, a, len, 2, `b${i}`, g))}
       </svg>
     </AbsoluteFill>
   );

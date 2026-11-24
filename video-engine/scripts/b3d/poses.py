@@ -57,7 +57,7 @@ def run(arm, ph, power=1.0, lean=6):
         mh.turn(arm, f"upperleg01.{s}", "X", thigh * 0.9 + 8); mh.turn(arm, f"lowerleg01.{s}", "X", knee)
         mh.turn(arm, f"foot.{s}", "X", -12 * max(0.0, math.sin(p + 0.9)))
         sw = 34 * power * math.sin(p)                                # braccio opposto alla gamba
-        mh.turn(arm, f"upperarm01.{s}", "Y", sg * 56); mh.turn(arm, f"upperarm01.{s}", "X", sw + 6)
+        mh.turn(arm, f"upperarm01.{s}", "Y", sg * 45); mh.turn(arm, f"upperarm01.{s}", "X", sw + 8)
         mh.turn(arm, f"lowerarm01.{s}", "X", -84 - 10 * math.sin(p))
 
 

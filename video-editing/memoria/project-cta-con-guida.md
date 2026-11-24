@@ -32,5 +32,5 @@ consiglio tecnico aggiunto; immagini = fotogrammi dell'originale.
 
 **24/11/2026:** Ross: «tutte le CTA hanno parole troppo diverse, mettine una tipo freddo uguale per tutte». Nella serie G la parola è
 FREDDO per tutti i reel (coaching e guida). La guida scritta è una sola, «Come scaldarsi quando fa freddo» (17 pagine, copre anche
-strati, mani e testa, respiro e squat): G2, G4 e G13 rimandano a quella. Nei reel dei singoli esercizi (G5-G8) Ross non vuole CTA.
+strati, mani e testa, respiro e squat): G2 e G4 rimandano a quella. G13 resta com'è, con la parola CIRCUITO («G13 va bene, lascialo stare», 24/11). Nei reel dei singoli esercizi (G5-G8) Ross non vuole CTA.
 G4 ha in più un banner fisso per tutto il reel («Commenta FREDDO · ricevi il circuito completo»).

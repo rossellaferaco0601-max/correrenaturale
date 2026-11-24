@@ -12,3 +12,7 @@ Ross lascia girare il lavoro di notte e vuole il PC integro.
 
 **How to apply:** una sola pipeline per volta (scontorno RVM → build → render → QA), mai due processi pesanti insieme;
 `rs_render.js` usa `RS_CONC` (default 3), `rvm_cutout.py` usa `RVM_THREADS` (default 4). Vedi [[project-ytcn38-y9v2-strumenti]].
+
+**24/11/2026:** di nuovo un riavvio della macchina per aver lanciato insieme master ffmpeg, render Remotion, render Blender e fotogrammi
+di controllo (code perse). Nel cloud tutti i lavori pesanti passano dalla coda unica `video-engine/scripts/g_runner.sh`
+(`work/queue.txt`, una riga alla volta); accanto sono ammessi solo fotogrammi singoli.

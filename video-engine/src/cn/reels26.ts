@@ -62,7 +62,7 @@ export const REELS26: ReelDef[] = [
         { kind: "fog", anim: "snap", at: 0.1, dur: 4.4, lines: ["Correre al freddo:", "l'errore più comune"], accent: "l'errore più comune" },
         // 24/11 (Ross: «non vedo nessun effetto», «l'omino è orribile»): schianto su «attenzione», corridore 3D al posto dei disegni,
         // gelo sui bordi quando «sembra di congelare», calore quando il corpo si scalda, avvicinamenti lenti nei passaggi senza grafica
-        { kind: "slam", at: 4.6, word: "ma", dur: 3.2, cues: ["ma", "attenzione"], lead: ["Ma"], text: "Attenzione" },
+        { kind: "slam", dy: -33, at: 4.6, word: "ma", dur: 3.2, cues: ["ma", "attenzione"], lead: ["Ma"], text: "Attenzione" },
         { kind: "gem", dy: -19, art: "over3d", at: 8.3, word: "eccessivo", dur: 12.9, cues: ["più", "realtà", "incubo"], phases: [{ lines: ["Più strati,", "più calore?"] }, { lines: ["L'errore", "più comune"] }, { lines: ["Un incubo", "di sudore"] }] },
         { kind: "kin", anim: "pulse", at: 21.5, word: "segreto", dur: 4.6, cues: ["segreto", "capire"], words: ["Il segreto?", "Capire il corpo"] },
         { kind: "gem", dy: -19, art: "warm3d", at: 27.9, dur: 11.9, cues: ["congelare", "5-10", "riscaldarsi"], phases: [{ lines: ["Sembra di", "congelare"] }, { lines: ["Dopo", "5-10 minuti"] }, { lines: ["Il corpo", "si scalda"] }], artCues: [1, 2] },
@@ -148,19 +148,19 @@ Se hai ancora una folta chioma ti basta coprire orecchie e fronte con una fascia
         { kind: "fog", anim: "rise", at: 0.1, dur: 3.1, lines: ["Il miglior riscaldamento", "per correre al freddo"], accent: "per correre al freddo" },
         // 24/11 (Ross: «né effetti né animazioni, noioso e poco dinamico»): schianto su «un buon riscaldamento», frase barrata sui saltelli,
         // gelo quando «le temperature si abbassano», corridore 3D che si scalda in casa con i jumping jack, calore «dall'interno»
-        { kind: "slam", at: 6.9, word: "è", dur: 2.3, cues: ["un", "riscaldamento"], lead: ["Un buon"], text: "Riscaldamento" },
+        { kind: "slam", dy: -65, at: 6.9, word: "è", dur: 2.3, cues: ["un", "riscaldamento"], lead: ["Un buon"], text: "Riscaldamento" },
         { kind: "bigstrike", at: 9.6, word: "qualche", dur: 2.1, text: "Qualche saltello", big: true },
         { kind: "kin", anim: "ice", at: 13.3, word: "temperature", dur: 3.1, cues: ["temperature", "abbassano"], words: ["Temperature", "basse"] },
         { kind: "ambient", mood: "frost", at: 13.3, word: "temperature", dur: 3.1 },
         { kind: "kin", anim: "slide", at: 16.7, word: "preparazione", dur: 4.9, cues: ["preparazione", "infortuni"], words: ["Preparazione mirata", "Meno infortuni"] },
         { kind: "kin", anim: "pulse", at: 22.6, word: "trucco", dur: 2.75, cues: ["trucco"], words: ["Il trucco?"] },
-        { kind: "gem", dy: -19, art: "casa3d", at: 25.7, word: "iniziare", dur: 15.5, cues: ["ambiente", "5", "dall'interno", "circolazione", "preparare"], phases: [{ lines: ["Al chiuso,", "in casa"] }, { lines: ["Bastano", "5 minuti"] }, { lines: ["Calore", "dall'interno"] }, { lines: ["Più", "circolazione"] }, { lines: ["Corpo", "pronto"] }], artCues: [1, 2] },
+        { kind: "gem", dy: -31, art: "casa3d", at: 25.7, word: "iniziare", dur: 15.5, cues: ["ambiente", "5", "dall'interno", "circolazione", "preparare"], phases: [{ lines: ["Al chiuso,", "in casa"] }, { lines: ["Bastano", "5 minuti"] }, { lines: ["Calore", "dall'interno"] }, { lines: ["Più", "circolazione"] }, { lines: ["Corpo", "pronto"] }], artCues: [1, 2] },
         { kind: "ambient", mood: "heat", at: 36.1, word: "dall'interno", dur: 2.6 },
       ],
       zooms: [{ at: 3.3, dur: 3.5, scale: 1.07 }, { at: 22.4, dur: 3.2, scale: 1.07 }],
-      // banner fisso per tutto il reel (Ross 24/11): una riga sotto i sottotitoli, che per questo salgono di 32 px
-      banner: { word: PAROLA, text: ["Commenta", "e ricevi il circuito completo"], y: 1516 },
-      capShift: 8,
+      // banner fisso per tutto il reel (Ross 24/11): una riga sotto i sottotitoli, che per questo salgono di 22 px
+      banner: { word: PAROLA, text: ["Commenta", "e ricevi il circuito completo"], y: 1522 },
+      capShift: 18,
       cta: GUIDA_CIRCUITO,
     },
     didascalia: CAP(`Se c'è una cosa che può cambiare la tua esperienza di corsa al freddo è un buon riscaldamento. E non parlo di qualche saltello prima di partire: quando le temperature si abbassano il corpo ha bisogno di una preparazione mirata, per evitare infortuni e per avere una corsa fluida e piacevole.
@@ -234,7 +234,7 @@ Anche qui si lavora sulla postura: si va in estensione con le anche e con il bac
         { kind: "gem", art: "lunge", at: 33.4, word: "fanno", dur: 10.0, cues: ["tutto", "inferiore", "temperatura"], phases: [{ lines: ["Lavora", "tutto il corpo"] }, { lines: ["Parte", "inferiore"] }, { lines: ["Sale la", "temperatura"] }], artCues: [-1, -1, 2] },
         { kind: "gem", art: "lunge", at: 46.9, word: "non", dur: 2.4, cues: ["minuto"], phases: [{ lines: ["Massimo", "un minuto"] }], artCues: [-1, -1, -1, 0] },
         // a 49,72 il sorgente passa alla posa del jumping jack (un secondo prima della fine): l'ultima frase va sopra la scheda «da ricordare»
-        { kind: "takeaway", at: 49.4, dur: 1.55, lines: ["Lo scopo?", "Solo scaldarsi"], accent: "Solo scaldarsi", art: "lunge" },
+        { kind: "takeaway", at: 49.4, dur: 1.55, lines: ["Lo scopo?", "Solo scaldarsi"], accent: "Solo scaldarsi" },   // senza disegno (24/11: niente omini)
       ],
       cta: GUIDA_CIRCUITO,
     },
@@ -252,6 +252,7 @@ Gli affondi fanno lavorare bene tutto il corpo, soprattutto la parte inferiore, 
       ...base,
       ...WIN,
       winHeader: { kicker: KICKER_W, title: "Jumping|jack", n: "4" },
+      winFeatherTop: 40, // nella parte parlata la testa di Daniele arriva vicino al bordo alto: sfumatura corta, i capelli non si velano
       master: master("G8-jack"),
       segments: cut([370.36, 404.06]),
       elements: [
@@ -276,10 +277,11 @@ Se fa molto, molto freddo metti giacca antivento, guanti, cappello e fascia. Se 
       segments: cut([404.14, 463.98]),
       elements: [
         // 24/11 (Ross): apertura a tutto schermo «Quando corriamo al freddo…» prima del video (campo `intro`), corridore 3D al passo con
-        // l'intensità bassa e poi in corsa leggera con la batteria piena, schianto su «c'è di più»
+        // l'intensità bassa e poi in corsa leggera con la batteria piena
         { kind: "kin", anim: "pulse", at: 6.4, word: "proprio", dur: 2.3, cues: ["corsa", "riscaldamento"], words: ["Corsa di", "riscaldamento"] },
-        { kind: "gem", dy: -19, art: "passo3d", at: 9.1, word: "corsa", dur: 13.2, cues: ["intensità", "camminata", "tendini", "nervoso"], phases: [{ lines: ["Intensità", "molto bassa"] }, { lines: ["Al passo della", "camminata"] }, { lines: ["Tendini,", "articolazioni", "e muscoli"] }, { lines: ["Sistema", "nervoso"] }] },
-        { kind: "slam", at: 22.8, word: "ma", dur: 2.6, cues: ["ma", "più"], lead: ["Ma c'è"], text: "Di più" },
+        { kind: "gem", dy: -10, art: "passo3d", at: 9.1, word: "corsa", dur: 13.2, cues: ["intensità", "camminata", "tendini", "nervoso"], phases: [{ lines: ["Intensità", "molto bassa"] }, { lines: ["Al passo della", "camminata"] }, { lines: ["Tendini,", "articolazioni", "e muscoli"] }, { lines: ["Sistema", "nervoso"] }] },
+        // «Ma c'è di più» cade su un primo piano (mento a 0,50): niente schianto, parole grandi appena sotto, da «più»
+        { kind: "kin", anim: "pulse", dy: 20, at: 23.1, word: "più", dur: 2.3, cues: ["più"], words: ["C'è di più"] },
         { kind: "gem", dy: -11, art: "energia3d", at: 27.7, word: "permette", dur: 17.2, cues: ["energia", "attivo", "sprecare", "godersi"], phases: [{ lines: ["Energia", "più efficiente"] }, { lines: ["Già attivo", "e pronto"] }, { lines: ["Niente energia", "sprecata"] }, { lines: ["Dall'inizio", "alla fine"] }] },
         { kind: "ticks", at: 47.0, word: "riscaldati", dur: 11.8, cues: ["riscaldati", "primi", "pronto"], items: ["Prima: scaldati", "Fuori: graduale"], foot: "Pronto e carico" },
       ],

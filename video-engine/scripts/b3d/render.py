@@ -1,13 +1,13 @@
 """Render delle rappresentazioni 3D della serie G: ogni «set» ha la sua inquadratura e le sue fasi (cicli di N fotogrammi che si chiudono).
 Uso: blender -b -P scripts/b3d/render.py -- <set> cartella_uscita [fase ...] [--still]     set: g1 g3 g4 g9 g10 g12
-Fotogrammi già presenti non vengono rifatti (ripresa dopo un'interruzione). B3D_SAMPLES regola i campioni (default 64)."""
+Fotogrammi già presenti non vengono rifatti (ripresa dopo un'interruzione). B3D_SAMPLES regola i campioni (default 64), B3D_RES il lato in pixel (default 600; nel pannello la figura è larga ~306 px, 480 bastano)."""
 import bpy, sys, os, math
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 import mh, runner, poses
 A = args(); SET, out = A[0], A[1]; still = "--still" in A; want = [a for a in A[2:] if not a.startswith("--")]
 N = 40
-sc = reset(res=600, samples=int(os.environ.get("B3D_SAMPLES", 64)))
+sc = reset(res=int(os.environ.get("B3D_RES", 600)), samples=int(os.environ.get("B3D_SAMPLES", 64)))
 r = runner.build(); arm = r["arm"]
 key = light("key", (-2.2, -3.0, 2.2), 300, 2.5, (1.0, 0.96, 0.9)); fill = light("fill", (2.6, -2.2, 0.8), 130, 3.0, (0.85, 0.95, 1.0))
 rim = light("rim", (0.8, 2.6, 1.8), 520, 1.6, (0.75, 1.0, 0.6)); rim2 = light("rim2", (-1.6, 2.2, 1.2), 420, 1.6, (0.9, 1.0, 0.85))
