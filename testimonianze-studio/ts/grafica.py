@@ -67,12 +67,12 @@ class Tela:
         """verso: giu | dx"""
         self.el.append(dict(t="freccia", x=x, y=y, w=w, h=h, verso=verso, colore=colore))
 
-    def immagine(self, percorso, x, y, w, h=None, raggio=0, copri=True):
+    def immagine(self, percorso, x, y, w, h=None, raggio=0, copri=True, ancora="centro"):
         """copri=True: ritaglia per riempire il riquadro (foto). False: mantiene le proporzioni (loghi)."""
         if h is None:
             with Image.open(percorso) as im:
                 h = round(w * im.height / im.width)
-        self.el.append(dict(t="img", src=str(percorso), x=x, y=y, w=w, h=h, raggio=raggio, copri=copri))
+        self.el.append(dict(t="img", src=str(percorso), x=x, y=y, w=w, h=h, raggio=raggio, copri=copri, ancora=ancora))
         return h
 
     # ── testo ────────────────────────────────────────────────────────────
@@ -159,7 +159,7 @@ def _prepara_img(e, k=1):
     if e["copri"]:
         r = max(w / im.width, h / im.height)
         im = im.resize((max(w, round(im.width * r)), max(h, round(im.height * r))), Image.LANCZOS)
-        sx, su = (im.width - w) // 2, (im.height - h) // 2
+        sx, su = (im.width - w) // 2, 0 if e.get("ancora") == "alto" else (im.height - h) // 2
         im = im.crop((sx, su, sx + w, su + h))
     else:
         im = im.resize((w, h), Image.LANCZOS)

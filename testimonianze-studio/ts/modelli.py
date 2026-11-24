@@ -585,7 +585,59 @@ def s_voci(con, ctx):
     return out
 
 
-FUNZIONI = {"C-virgolette": c_virgolette, "C-primadopo": c_primadopo, "C-percorso": c_percorso, "C-voci": c_voci,
+# ═══════════════ IN PROVA: schermata originale del messaggio ════════════════
+# Non sono ancora nella rotazione quotidiana: servono gli allegati (cartella Drive) e la copertura di nomi e numeri.
+MODELLI_IN_PROVA = {
+    "C-schermata": dict(formato="carosello", nome="Schermata originale", famiglia="schermata"),
+    "S-schermata": dict(formato="stories", nome="Schermata originale", famiglia="schermata"),
+}
+
+
+def _schermata(ctx, con):
+    """Immagine (già coperta) della prima testimonianza usata."""
+    return (ctx.get("schermate") or {}).get((con.get("ids") or [""])[0])
+
+
+def c_schermata(con, ctx):
+    """Slide 1: il messaggio vero, grande, sotto il titolo. Le altre slide seguono il modello Virgolette."""
+    out = c_virgolette(con, ctx)
+    img, el, n = _schermata(ctx, con), con["elementi"][0], len(con["elementi"])
+    if not img:
+        return out
+    t = Tela(CW, CH, NERO)
+    t.pillola(M, 96, "Messaggio originale", 28, VERDE, BIANCO, traccia=3)
+
+    def dis(tt, s, y):
+        return y + tt.testo(M, y, CW - 2 * M, el["titolo"], 78 * s, BIANCO, peso="Black", enfasi=VERDE, inter=1.06)
+
+    y = adatta(t, dis, 186, 470, scale=[1, .92, .85, .78, .7, .62, .55])
+    # la schermata sta SOTTO il titolo, in una zona sua: nessun testo sopra l'immagine. Esce dal bordo: invita a scorrere
+    t.immagine(img, M + 40, y + 50, CW - 2 * M - 80, CH - (y + 50), raggio=36, ancora="alto")
+    t.rett(0, CH - 128, CW, 128, NERO)
+    _piede_c(t, 1, n, True)
+    out[0] = t
+    return out
+
+
+def s_schermata(con, ctx):
+    out = s_messaggio(con, ctx)
+    img, el = _schermata(ctx, con), con["elementi"][0]
+    if not img:
+        return out
+    t = Tela(SW, SH, NERO)
+    t.pillola(M, S_ALTO, "Messaggio originale", 28, VERDE, BIANCO, traccia=3)
+
+    def dis(tt, s, y):
+        return y + tt.testo(M, y, SW - 2 * M, el["titolo"], 84 * s, BIANCO, peso="Black", enfasi=VERDE, inter=1.06)
+
+    y = adatta(t, dis, S_ALTO + 90, S_ALTO + 400, scale=[1, .92, .85, .78, .7, .62, .55])
+    t.immagine(img, M + 30, y + 50, SW - 2 * M - 60, S_BASSO - 10 - (y + 50), raggio=36, ancora="alto")
+    _piede_s(t, True)
+    out[0] = t
+    return out
+
+
+FUNZIONI = {"C-schermata": c_schermata, "S-schermata": s_schermata, "C-virgolette": c_virgolette, "C-primadopo": c_primadopo, "C-percorso": c_percorso, "C-voci": c_voci,
             "S-messaggio": s_messaggio, "S-virgolette": s_virgolette, "S-tappe": s_tappe, "S-voci": s_voci}
 
 

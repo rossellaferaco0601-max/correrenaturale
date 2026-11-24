@@ -67,3 +67,8 @@ Le anteprime in `anteprime/` usano testi di esempio inventati: servono solo a ve
 ## Dove sta cosa
 - `esegui.py` — il flusso; `ts/dati.py` foglio e pulizia; `ts/selezione.py` regole, punteggio, registro, rotazione; `ts/scrittura.py` istruzioni per Claude; `ts/controlli.py` controlli; `ts/grafica.py` motore PNG + PPTX; `ts/modelli.py` gli 8 modelli; `ts/consegna.py` file di consegna e notifica.
 - `dati/` (mai su GitHub): `testimonianze.csv`, `service-account.json`, `registro_utilizzi.csv`, `log.txt`.
+
+## In prova: schermata originale e vocale (non ancora nel flusso quotidiano)
+- `ts/schermate.py` + modelli `C-schermata` / `S-schermata`: la prima slide mostra lo screenshot vero del messaggio. Prima di usarlo, nomi, numeri, email e foto profilo vengono cercati (Claude Code legge l'immagine) e coperti con rettangoli «bruciati» nei pixel. La copertura va sempre ricontrollata a occhio.
+- `ts/vocale.py`: slide video (MP4) con l'audio originale, l'onda che avanza e le parole a tempo. Servono ffmpeg e `pip install -r requirements-audio.txt`. Le parole trascritte si correggono nel file `.parole.json` accanto al video.
+- Per entrare nel flusso servono: accesso alla cartella Drive degli allegati (service account come Visualizzatore, «Google Drive API» abilitata) e la decisione sul consenso per voce e schermate.
