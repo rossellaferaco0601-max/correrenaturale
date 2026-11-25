@@ -42,7 +42,7 @@ for (const id of process.argv.slice(2)) {
   p.elements.forEach((el, i) => {
     const s = resolveStart(el, words), durF = Math.round(el.dur * FPS);
     const a = introF + Math.max(0, s), b = el.kind === "takeaway" ? introF + total - 1 : Math.min(introF + total - 1, introF + s + durF + 1);
-    const txt = "lines" in el && Array.isArray(el.lines) ? el.lines.join(" ") : "words" in el && Array.isArray(el.words) ? el.words.join(" ") : "text" in el ? String(el.text) : "phases" in el && Array.isArray(el.phases) ? el.phases.map((ph) => ph.lines.join(" ")).join(" / ") : "items" in el && Array.isArray(el.items) ? el.items.join(", ") : el.kind === "ambient" ? (el.mood === "frost" ? "gelo sui bordi" : "calore sui bordi") : "";
+    const txt = "lines" in el && Array.isArray(el.lines) ? el.lines.join(" ") : "words" in el && Array.isArray(el.words) ? el.words.join(" ") : "text" in el ? String(el.text) : "phases" in el && Array.isArray(el.phases) ? (el.phases as unknown[]).map((ph) => (Array.isArray(ph) ? ph : (ph as { lines: string[] }).lines).join(" ")).join(" / ") : "items" in el && Array.isArray(el.items) ? el.items.join(", ") : el.kind === "ambient" ? (el.mood === "frost" ? "gelo sui bordi" : "calore sui bordi") : "";
     const nm = `${String(10 + i).padStart(2, "0")}_${NAMES[el.kind] ?? el.kind}_${slug(txt.split(" / ")[0])}.mov`;
     rows.push({ file: nm, a, b, what: `${NAMES[el.kind] ?? el.kind}: ${txt}`, layer: i });
   });
