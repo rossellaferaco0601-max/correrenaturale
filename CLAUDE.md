@@ -61,6 +61,10 @@ scripts/g_runner.sh &                            # coda UNICA dei lavori pesanti
 python3 scripts/g_voce_src.py public/ytcn26/ytcn26_src.mp4 && python3 scripts/g_unify.py work/ytcn26_shots.json   # sorgente nuovo: via la musica che ha dentro (resta *_conmusica.mp4) e stesso ritaglio per gli stacchi nella stessa camera
 python3 scripts/g_sheets.py inquadrature public/ytcn26/masters/G2-strati.mp4 out/chk/a.jpg ; python3 scripts/g_sheets.py finale out/ytcn26/consegna/G2-strati_v3.mp4 out/chk/b.jpg   # fogli da GUARDARE: volto al centro in ogni inquadratura; ultimo secondo e mezzo prima della CTA
 scripts/b3d/fetch.sh && blender -b -P scripts/b3d/render.py -- g1 public/ytcn26/b3d/g1 [fase …] [--still]   # corridore 3D (corpo MakeHuman vestito da corsa) a fasi che si chiudono in ciclo; set g1 g3 g4 g9 g10 g12, agganciati alle parole in src/cn/gem/B3D.tsx
+npx tsx scripts/cn_layers.ts G3-mani && bash out/ytcn26/livelli/G3-mani/lista.sh   # CONSEGNA A LIVELLI per CapCut (regola del 25/11): video pulito + ogni grafica .mov trasparente + sottotitoli .mov/.srt + CTA + MONTAGGIO.txt
+../.claude/skills/effects/.venv/bin/python scripts/ai/cutout.py master.mp4 22.5 2 out/x.mov   # Daniele ritagliato dallo sfondo (RVM, gratis, ~0,5-0,9 s a fotogramma): scritte DIETRO la persona
+../.claude/skills/effects/.venv/bin/python scripts/ai/depth.py master.mp4 23.5 out/d.png      # mappa di profondità (Depth Anything V2): parallasse 3D, sfocatura del solo sfondo
+work/venv_img/bin/python scripts/ai/image.py "frost on a green glove, no text" out/i.png 512 512   # immagini generate QUI gratis (SD-Turbo, ~1-2 min): materiali e atmosfere, non persone
 ```
 
 ## Clienti
@@ -73,6 +77,7 @@ Contesto e regole di montaggio stanno in `video-editing/`. Per Correre Naturale 
 - Un solo lavoro pesante alla volta (master FFmpeg, render Remotion, render Blender): passano tutti dalla coda `scripts/g_runner.sh`.
 - Niente persone disegnate in SVG nelle animazioni: corridore 3D (`scripts/b3d/`) o immagini/clip generate; nei reel non si consegna musica (se il sorgente ne ha, si toglie dal sorgente).
 - Le chiavi API (ElevenLabs, Runway) vanno nei secret dell'ambiente, mai nel repo.
+- Ross non può spendere: solo strumenti gratuiti. Risorse gratuite raggiungibili dall'ambiente (25/11): Poly Haven (modelli 3D, luci, texture CC0), LottieFiles, Mixkit, GitHub, Hugging Face, PyTorch. Modelli in `video-engine/work/models/ai/` e `~/.cache/huggingface` (non nel repo).
 
 `video-engine/reelstudio/` contiene il codice e i progetti di ReelStudio (la dashboard sul PC di Ross); nel cloud gira come composizione `RSReel` (asset in `video-engine/public/rs/`). Schema project.json e catalogo effetti: `video-engine/reelstudio/CLAUDE.md`. Mai committare `impostazioni.json` (chiavi API).
 
