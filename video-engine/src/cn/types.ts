@@ -149,6 +149,10 @@ export type CNReelProps = {
   zooms?: { at: number; dur: number; scale: number }[];
   /** apertura a tutto schermo PRIMA del video (Ross 24/11, G9: «metti un'introduzione tipo "quando corriamo al freddo" e poi parti con il video») */
   intro?: { seconds: number; kicker?: string; lines: string[]; accent?: string };
+  /** export a livelli per CapCut (Ross 25/11: «ogni cosa deve essere editabile»): con `layer` il reel si rende su fondo TRASPARENTE e
+   *  mostra una sola cosa: il numero di una grafica (indice in `elements`), «caps» = solo i sottotitoli, «cta» = solo il pannello finale,
+   *  «intro» = solo l'apertura a tutto schermo. «video» = video pulito con l'audio, con i movimenti di camera e le sfumature della finestra ma senza nessuna scritta. Script: scripts/cn_layers.ts */
+  layer?: number | "video" | "caps" | "cta" | "intro" | "banner" | "header";
   /** corpo dei sottotitoli (default 64) */
   capSize?: number;
   /** reel «a finestra»: bordi alto e basso del video sfumati nel verde del fondo, in px (Ross 24/11) */

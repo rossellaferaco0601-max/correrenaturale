@@ -165,48 +165,50 @@ export const CNReel: React.FC<CNReelProps> = (p) => {
   let sd = 0;
   p.elements.forEach((el, i) => { if (el.kind === "side") { const l = frame - starts[i], d = Math.round(el.dur * fps); if (l >= 0 && l < d) sd = Math.max(sd, sideK(l, d)); } });
 
+  // export a livelli (CapCut): fondo trasparente, niente video, solo il livello chiesto
+  const L = p.layer, only = (k: number | string) => L === undefined || L === k;
   return (
-    <AbsoluteFill style={{ background: "#2F4D1E", fontFamily: "Blinker, sans-serif" }}>
+    <AbsoluteFill style={{ background: L === undefined || L === "video" ? "#2F4D1E" : "transparent", fontFamily: "Blinker, sans-serif" }}>
       <Sequence from={introF} durationInFrames={total} layout="none">
         {cam > 0 ? <AbsoluteFill style={{ background: "#E9E4D2", opacity: cam }} /> : null}
         {orb > 0 || sd > 0 ? <AbsoluteFill style={{ background: "linear-gradient(180deg,#1C3D15 0%,#0B0F0A 100%)" }} /> : null}
         <AbsoluteFill style={{ transform: `translate(${sd * SIDE.x}px, ${sd * SIDE.y}px) scale(${1 - (1 - SIDE.scale) * sd})`, transformOrigin: "0 0", borderRadius: sd > 0 ? 60 * sd : 0, overflow: sd > 0 ? "hidden" : "visible" }}>
         <AbsoluteFill style={{ transform: `scale(${orbScale})`, transformOrigin: "50% 100%", borderRadius: 44 * orb, overflow: "hidden", boxShadow: orb > 0 ? "0 -20px 80px rgba(0,0,0,0.6)" : "none" }}>
         <AbsoluteFill style={{ opacity: videoFade, transform: `translate(${shake.dx}px, ${camShift + shake.dy}px) scale(${hookZoom * shake.sc * tailPush * zoom})`, transformOrigin: "50% 30%" }}>
-          <Master src={p.master} total={total} fade={lead >= 0 ? Math.min(tailF, 15) : undefined} />
+          {only("video") ? <Master src={p.master} total={total} fade={lead >= 0 ? Math.min(tailF, 15) : undefined} /> : null}
         </AbsoluteFill>
         </AbsoluteFill>
         </AbsoluteFill>
         {/* reel a finestra: i bordi del video sfumano nel verde del fondo (niente riga netta tra video e fasce) */}
-        {p.winFeather ? [0, 1].map((b) => { const h = b ? p.winFeather! : p.winFeatherTop ?? p.winFeather!; return <div key={b} style={{ position: "absolute", left: 0, width: 1080, top: b ? 1380 - h : 580, height: h, background: `linear-gradient(${b ? 0 : 180}deg, #49762E 0%, rgba(73,118,46,0.75) 30%, rgba(73,118,46,0) 100%)` }} />; }) : null}
+        {p.winFeather && only("video") ? [0, 1].map((b) => { const h = b ? p.winFeather! : p.winFeatherTop ?? p.winFeather!; return <div key={b} style={{ position: "absolute", left: 0, width: 1080, top: b ? 1380 - h : 580, height: h, background: `linear-gradient(${b ? 0 : 180}deg, #49762E 0%, rgba(73,118,46,0.75) 30%, rgba(73,118,46,0) 100%)` }} />; }) : null}
         {p.hook ? <Hook hook={p.hook} /> : null}
         <AbsoluteFill style={{ transform: `translateY(${p.gfxShift ?? 0}px) scale(${p.gfxScale ?? 1})`, transformOrigin: `50% ${H * 0.44}px` }}>
           {/* l'intestazione sparisce 1,3 s prima della fine del parlato e non torna per pochi fotogrammi dopo l'ultima grafica */}
-          {p.winHeader ? <WinHeader {...p.winHeader} show={Math.min(...p.elements.map((el, i) => { const l = frame - starts[i], d = Math.round(el.dur * fps); return l < -8 ? Math.min(1, (-8 - l) / 6) : l > d + 2 ? Math.min(1, (l - d - 2) / 6) : 0; }), 1) * Math.min(1, Math.max(0, (total - tailF - 40 - frame) / 6))} /> : null}
-          {p.elements.map((el, i) => (FULLSCREEN.has(el.kind) ? null : el.dy || el.shiftAt !== undefined ? (
+          {p.winHeader && only("header") ? <WinHeader {...p.winHeader} show={Math.min(...p.elements.map((el, i) => { const l = frame - starts[i], d = Math.round(el.dur * fps); return l < -8 ? Math.min(1, (-8 - l) / 6) : l > d + 2 ? Math.min(1, (l - d - 2) / 6) : 0; }), 1) * Math.min(1, Math.max(0, (total - tailF - 40 - frame) / 6))} /> : null}
+          {p.elements.map((el, i) => (FULLSCREEN.has(el.kind) || !only(i) ? null : el.dy || el.shiftAt !== undefined ? (
             <AbsoluteFill key={i} style={{ transform: `translateY(${(el.dy ?? 0) + (el.shiftAt !== undefined && frame - starts[i] >= Math.round(el.shiftAt * fps) ? el.shiftDy ?? 0 : 0)}px)` }}><AnyElement el={{ ...el, onAt: resolveCues(el, starts[i], words) } as Element} start={starts[i]} /></AbsoluteFill>
           ) : (
             <AnyElement key={i} el={{ ...el, onAt: resolveCues(el, starts[i], words) } as Element} start={starts[i]} />
           )))}
         </AbsoluteFill>
         {/* le grafiche a tutto schermo non si spostano né si rimpiccioliscono: devono coprire tutto il fotogramma (Ross 11/11: banda in alto) */}
-        {p.elements.map((el, i) => (FULLSCREEN.has(el.kind) ? (
+        {p.elements.map((el, i) => (FULLSCREEN.has(el.kind) && only(i) ? (
           <AnyElement key={i} el={{ ...el, onAt: resolveCues(el, starts[i], words) } as Element} start={starts[i]} />
         ) : null))}
-        {capHidden ? null : (
+        {capHidden || !only("caps") ? null : (
           <AbsoluteFill style={{ transform: `translateY(${p.capShift ?? 0}px)` }}>
             <Captions words={words} size={p.capSize} endFrame={total - 4} startFrame={Math.round((p.capFrom ?? 0) * fps)} />
           </AbsoluteFill>
         )}
-        {p.banner ? <Banner {...p.banner} /> : null}
+        {p.banner && only("banner") ? <Banner {...p.banner} /> : null}
       </Sequence>
       {/* ctaSeconds: 0 = reel senza pannello finale (video «spontanei»: la chiusa la dice chi parla) */}
-      {ctaFrames > 0 ? (
+      {ctaFrames > 0 && only("cta") ? (
         <Sequence from={introF + total - xfade} durationInFrames={ctaFrames + xfade} layout="none">
           <CTA cta={p.cta} frames={ctaFrames} soft={lead >= 0} />
         </Sequence>
       ) : null}
-      {p.intro ? <Intro frames={introF} kicker={p.intro.kicker} lines={p.intro.lines} accent={p.intro.accent} /> : null}
+      {p.intro && only("intro") ? <Intro frames={introF} kicker={p.intro.kicker} lines={p.intro.lines} accent={p.intro.accent} /> : null}
     </AbsoluteFill>
   );
 };

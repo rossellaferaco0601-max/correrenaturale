@@ -21,3 +21,4 @@
 - [CTA con guida](project-cta-con-guida.md) — 21-24/11: reel che chiudono con «commenta e ti mando la guida»; nella serie G parola unica FREDDO e una sola guida, «Come scaldarsi quando fa freddo»
 - [Figure realistiche / 3D](feedback-figure-realistiche-3d.md) — 24/11: mai omini disegnati in SVG; persone in 3D (Blender, scripts/b3d) o generate; effetti veri oltre ai pannelli; pilota prima della serie
 - [Sorgente: musica e inquadratura](feedback-sorgente-musica-e-inquadratura.md) — 24/11: togliere la musica dal sorgente prima di montare; foglio delle inquadrature dopo ogni master (volto al centro); una sola parola CTA per serie
+- [Consegna a livelli per CapCut](feedback-consegna-a-livelli.md) — 25/11: ogni reel anche a livelli editabili (video pulito + grafiche trasparenti + SRT + tempi); correzioni piccole le fa Ross
